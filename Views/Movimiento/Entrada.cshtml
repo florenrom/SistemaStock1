@@ -1,0 +1,51 @@
+﻿@model NuevoSistemaNat.Models.ViewModels.OperacionStockEntradaViewModel
+@{
+    ViewData["Title"] = "Registrar Entrada";
+}
+<h2>Registrar Entrada de Stock</h2>
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="bi bi-exclamation-triangle-fill me-2"></i> @TempData["Error"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" arialabel="Close"></button>
+    </div>
+}
+<form asp-action="Entrada">
+    <div class="form-group mb-3">
+        <label asp-for="idProducto" class="control-label"></label>
+        <select asp-for="idProducto" class="form-select" aspitems="Model.Productos">
+            <option value="">-- Seleccione --</option>
+        </select>
+        <span asp-validation-for="idProducto" class="text-danger"></span>
+    </div>
+    <div class="form-group mb-3">
+        37
+        <label asp-for="idDepositoOrigen" class="control-label"></label>
+        <select asp-for="idDepositoOrigen" class="form-select" aspitems="Model.Depositos">
+            <option value="">-- Seleccione --</option>
+        </select>
+        <span asp-validation-for="idDepositoOrigen" class="text-danger"></span>
+    </div>
+    <div class="form-group mb-3">
+        <label asp-for="Cantidad" class="control-label"></label>
+        <input asp-for="Cantidad" class="form-control" />
+        <span asp-validation-for="Cantidad" class="text-danger"></span>
+    </div>
+    <div class="form-group mb-3">
+        <label asp-for="idProveedor" class="control-label"></label>
+        <select asp-for="idProveedor" class="form-select" aspitems="Model.Proveedores">
+            <option value="">-- Seleccione --</option>
+        </select>
+        <span asp-validation-for="idProveedor" class="text-danger"></span>
+    </div>
+    <div class="form-group mb-3">
+        <label asp-for="Observaciones" class="control-label"></label>
+        <textarea asp-for="Observaciones" class="form-control"
+                  rows="3"></textarea>
+        <span asp-validation-for="Observaciones" class="text-danger"></span>
+    </div>
+    <div class="form-group mb-3">
+        <button type="submit" class="btn btn-primary">Registrar Entrada</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+    </div>
+</form>

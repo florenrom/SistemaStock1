@@ -1,0 +1,67 @@
+@model IEnumerable<NuevoSistemaNat.Models.Entities.Categoria>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Categorias</h1>
+
+@* Preguntamos si existe la clave "Ok" en TempData *@
+@if (TempData["Ok"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="bi bi-check-circle-fill me-2"></i> @TempData["Ok"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" arialabel="Close"></button>
+    </div>
+}
+@* Alerta de Error *@
+12
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="bi bi-exclamation-triangle-fill me-2"></i> @TempData["Error"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" arialabel="Close"></button>
+    </div>
+}
+<p>
+    <a asp-action="Create" class="btn btn-primary">+ Nueva Categoria</a>
+</p>
+<table class=" table table-striped mt-3">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CaNombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CADescripcion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CaActivo)
+            </th>
+
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => item.CaNombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.CADescripcion)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.CaActivo)
+                </td>
+
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

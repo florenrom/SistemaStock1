@@ -1,0 +1,100 @@
+@using NuevoSistemaNat.Models.Enum
+@model IEnumerable<NuevoSistemaNat.Models.Entities.Movimiento>
+
+```cshtml
+@{
+    ViewData["Title"] = "Stock";
+}
+
+<h1>Movimientos</h1>
+
+@if (TempData["Ok"] != null)
+{
+    @TempData["Ok"]
+}
+
+@if (TempData["Error"] != null)
+{
+    @TempData["Error"]
+}
+
+<form method="get">
+    <select name="idProducto">
+        <option value="">Todos los Productos</option>
+    </select>
+
+    <select name="tipo">
+        <option value="">Todos los Movimientos</option>
+    </select>
+
+    <button type="submit">Buscar</button>
+</form>
+
+<h2>Listado de Movimientos</h2>
+
+<a asp-action="Entrada">Nueva Entrada</a>
+<a asp-action="Salida">Nueva Salida</a>
+<a asp-action="Transferencia">Nueva Transferencia</a>
+
+@if (Model.Count() == 200)
+{
+    <p>
+        Mostrando los últimos 200 movimientos.
+        Usá los filtros para acotar la búsqueda.
+    </p>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Fecha</th>
+            <th>Tipo</th>
+            <th>Producto</th>
+            <th>Depósito origen</th>
+            <th>Depósito destino</th>
+            <th>Cantidad</th>
+            <th>Observaciones</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Fecha.ToString("dd/MM/yyyy HH:mm")
+                </td>
+
+                <td>
+                    @{
+                        var (badgeClass, texto) = item.Tipo switch
+                        {
+                            TipoMovimiento.TransferenciaSalida => ("bg-warning text-dark", "Transf. salida"),
+                            TipoMovimiento.TransferenciaEntrada => ("bgsuccess", "Transf. entrada"),
+                            TipoMovimiento.Entrada => ("bg-primary", "Ingreso"),
+                            TipoMovimiento.Salida => ("bg-danger", "Egreso"),
+                            _ => ("bg-secondary", item.Tipo.ToString())
+                        };
+                    }
+
+                    <span class="@badgeClass">@texto</span>
+                </td>
+
+                <td>@item.Producto</td>
+
+                <td>@(item.DepositoOrigen)</td>
+
+                <td>@(item.DepositoDestino)</td>
+
+                <td>@item.Cantidad</td>
+
+                <td>@item.Observaciones</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (!Model.Any())
+{
+    <p>No hay movimientos.</p>
+}

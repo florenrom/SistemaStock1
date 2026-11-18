@@ -1,0 +1,62 @@
+@model NuevoSistemaNat.Models.Entities.Categoria
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Detalles</h1>
+
+<hr />
+<dl class="row">
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.CaNombre)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.CaNombre)
+    </dd>
+</dl>
+<dl class="row">
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.CADescripcion)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.CADescripcion)
+    </dd>
+</dl>
+<dl class="row">
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.CaActivo)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.CaActivo)
+    </dd>
+</dl>
+<dl class="row">
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.createAt)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.createAt)
+    </dd>
+</dl>
+<dl class="row">
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.updateAt)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.updateAt)
+    </dd>
+</dl>
+<dl class="row">
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Productos)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Productos)
+    </dd>
+</dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
