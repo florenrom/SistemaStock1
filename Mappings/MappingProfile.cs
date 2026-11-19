@@ -9,7 +9,9 @@ namespace NuevoSistemaNat.Mappings
     {
         public MappingProfile()
         {
-            CreateMap<Movimiento, MovimientoViewModel>();
+            CreateMap<Movimiento, MovimientoViewModel>()
+            .ForMember(dest => dest.ProductoNombre,
+                opt => opt.MapFrom(src => src.Producto != null ? src.Producto.PrNombre : null));
             CreateMap<MovimientoViewModel, Movimiento>();
         }
     }

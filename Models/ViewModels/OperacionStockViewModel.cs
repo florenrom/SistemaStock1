@@ -17,7 +17,7 @@ namespace NuevoSistemaNat.Models.ViewModels
         public List<SelectListItem>? Depositos { get; set; }
 
         [Required(ErrorMessage = "La cantidad es obligatoria.")]
-        [Range(1, int.MaxValue, ErrorMessage = "La cantidad debe ser mayor acero.")]
+        [Range(1, int.MaxValue, ErrorMessage = "La cantidad debe ser mayor a cero.")]
         public int Cantidad { get; set; }
 
         [Display(Name = "Proveedor")]

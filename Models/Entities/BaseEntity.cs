@@ -13,10 +13,5 @@ namespace NuevoSistemaNat.Models.Entities
         public DateTime createAt { get; set; } = DateTime.UtcNow;
         public DateTime? updateAt { get; set; }
 
-
-
-
-
-
     }
 }
