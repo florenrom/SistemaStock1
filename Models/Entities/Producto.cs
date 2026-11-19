@@ -26,12 +26,14 @@ namespace NuevoSistemaNat.Models.Entities
 
         [Required(ErrorMessage = "El precio de costo es obligatorio.")]
         [Range(typeof(decimal), "0.01", "10000000", ErrorMessage = "El precio de costo debe estar entre 0,01 y 10.000.000.")]
+        [Column(TypeName = "decimal(18,2)")]
         [DataType(DataType.Currency)]
         [Display(Name = "Precio de Costo")]
         public decimal PrPrecioCosto { get; set; }
 
         [Required(ErrorMessage = "El precio de venta es obligatorio.")]
         [Range(typeof(decimal), "0.01", "10000000", ErrorMessage = "El precio de venta debe estar entre 0,01 y 10.000.000.")]
+        [Column(TypeName = "decimal(18,2)")]
         [DataType(DataType.Currency)]
         [Display(Name = "Precio de Venta")]
         public decimal PrPrecioVenta { get; set; }

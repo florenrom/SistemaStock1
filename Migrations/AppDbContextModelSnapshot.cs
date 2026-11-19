@@ -16,7 +16,7 @@ namespace NuevoSistemaNat.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.19")
+                .HasAnnotation("ProductVersion", "9.0.23")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -79,6 +79,203 @@ namespace NuevoSistemaNat.Migrations
                         });
                 });
 
+            modelBuilder.Entity("NuevoSistemaNat.Models.Entities.Cliente", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CADescripcion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("CaActivo")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Contacto")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Direccion")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Documento")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)");
+
+                    b.Property<string>("Observaciones")
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<string>("Telefono")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<DateTime>("createAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("updateAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Clientes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CADescripcion = "",
+                            CaActivo = true,
+                            Nombre = "Cliente A",
+                            createAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        });
+                });
+
+            modelBuilder.Entity("NuevoSistemaNat.Models.Entities.Deposito", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CADescripcion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("CaActivo")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Ubicacion")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<DateTime>("createAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("updateAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Depositos");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CADescripcion = "",
+                            CaActivo = true,
+                            Nombre = "Depósito General",
+                            Ubicacion = "Plantabaja",
+                            createAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CADescripcion = "",
+                            CaActivo = true,
+                            Nombre = "Depósito Principal",
+                            Ubicacion = "Planta alta",
+                            createAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CADescripcion = "",
+                            CaActivo = true,
+                            Nombre = "Depósito Secundario",
+                            Ubicacion = "Planta baja",
+                            createAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        });
+                });
+
+            modelBuilder.Entity("NuevoSistemaNat.Models.Entities.Movimiento", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CADescripcion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("CaActivo")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Cantidad")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Fecha")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Observaciones")
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<int>("Tipo")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UsuarioRegistro")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime>("createAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("idCliente")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("idDepositoDestino")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("idDepositoOrigen")
+                        .HasColumnType("int");
+
+                    b.Property<int>("idProducto")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("idProveedor")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("updateAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("idCliente");
+
+                    b.HasIndex("idDepositoDestino");
+
+                    b.HasIndex("idDepositoOrigen");
+
+                    b.HasIndex("idProducto");
+
+                    b.HasIndex("idProveedor");
+
+                    b.ToTable("Movimientos");
+                });
+
             modelBuilder.Entity("NuevoSistemaNat.Models.Entities.Producto", b =>
                 {
                     b.Property<int>("Id")
@@ -97,12 +294,20 @@ namespace NuevoSistemaNat.Migrations
                     b.Property<int>("CaId")
                         .HasColumnType("int");
 
+                    b.Property<int>("CantidadStock")
+                        .HasColumnType("int");
+
                     b.Property<bool>("PrActivo")
                         .HasColumnType("bit");
 
                     b.Property<string>("PrCodigo")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("PrDescripcion")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("PrNombre")
                         .IsRequired()
@@ -115,7 +320,7 @@ namespace NuevoSistemaNat.Migrations
                     b.Property<decimal>("PrPrecioVenta")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("PrStockMinimo")
+                    b.Property<int>("StockMinimo")
                         .HasColumnType("int");
 
                     b.Property<int>("UnidadDeMedida")
@@ -134,6 +339,144 @@ namespace NuevoSistemaNat.Migrations
                     b.ToTable("Productos");
                 });
 
+            modelBuilder.Entity("NuevoSistemaNat.Models.Entities.Proveedor", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CADescripcion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("CaActivo")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Contacto")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Direccion")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Documento")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)");
+
+                    b.Property<string>("Observaciones")
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<string>("Telefono")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<DateTime>("createAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("updateAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Proveedores");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CADescripcion = "",
+                            CaActivo = true,
+                            Nombre = "Proveedor A",
+                            createAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        });
+                });
+
+            modelBuilder.Entity("NuevoSistemaNat.Models.Entities.StockDeposito", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CADescripcion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("CaActivo")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Cantidad")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("createAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("idDeposito")
+                        .HasColumnType("int");
+
+                    b.Property<int>("idProducto")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("updateAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("idDeposito");
+
+                    b.HasIndex("idProducto");
+
+                    b.ToTable("StockDepositos");
+                });
+
+            modelBuilder.Entity("NuevoSistemaNat.Models.Entities.Movimiento", b =>
+                {
+                    b.HasOne("NuevoSistemaNat.Models.Entities.Cliente", "Cliente")
+                        .WithMany("Movimientos")
+                        .HasForeignKey("idCliente");
+
+                    b.HasOne("NuevoSistemaNat.Models.Entities.Deposito", "DepositoDestino")
+                        .WithMany("MovimientosDestino")
+                        .HasForeignKey("idDepositoDestino");
+
+                    b.HasOne("NuevoSistemaNat.Models.Entities.Deposito", "DepositoOrigen")
+                        .WithMany("MovimientosOrigen")
+                        .HasForeignKey("idDepositoOrigen");
+
+                    b.HasOne("NuevoSistemaNat.Models.Entities.Producto", "Producto")
+                        .WithMany("Movimientos")
+                        .HasForeignKey("idProducto")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("NuevoSistemaNat.Models.Entities.Proveedor", "Proveedor")
+                        .WithMany("Movimientos")
+                        .HasForeignKey("idProveedor");
+
+                    b.Navigation("Cliente");
+
+                    b.Navigation("DepositoDestino");
+
+                    b.Navigation("DepositoOrigen");
+
+                    b.Navigation("Producto");
+
+                    b.Navigation("Proveedor");
+                });
+
             modelBuilder.Entity("NuevoSistemaNat.Models.Entities.Producto", b =>
                 {
                     b.HasOne("NuevoSistemaNat.Models.Entities.Categoria", "Categoria")
@@ -145,9 +488,54 @@ namespace NuevoSistemaNat.Migrations
                     b.Navigation("Categoria");
                 });
 
+            modelBuilder.Entity("NuevoSistemaNat.Models.Entities.StockDeposito", b =>
+                {
+                    b.HasOne("NuevoSistemaNat.Models.Entities.Deposito", "Deposito")
+                        .WithMany("Stocks")
+                        .HasForeignKey("idDeposito")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("NuevoSistemaNat.Models.Entities.Producto", "Producto")
+                        .WithMany("Stocks")
+                        .HasForeignKey("idProducto")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Deposito");
+
+                    b.Navigation("Producto");
+                });
+
             modelBuilder.Entity("NuevoSistemaNat.Models.Entities.Categoria", b =>
                 {
                     b.Navigation("Productos");
+                });
+
+            modelBuilder.Entity("NuevoSistemaNat.Models.Entities.Cliente", b =>
+                {
+                    b.Navigation("Movimientos");
+                });
+
+            modelBuilder.Entity("NuevoSistemaNat.Models.Entities.Deposito", b =>
+                {
+                    b.Navigation("MovimientosDestino");
+
+                    b.Navigation("MovimientosOrigen");
+
+                    b.Navigation("Stocks");
+                });
+
+            modelBuilder.Entity("NuevoSistemaNat.Models.Entities.Producto", b =>
+                {
+                    b.Navigation("Movimientos");
+
+                    b.Navigation("Stocks");
+                });
+
+            modelBuilder.Entity("NuevoSistemaNat.Models.Entities.Proveedor", b =>
+                {
+                    b.Navigation("Movimientos");
                 });
 #pragma warning restore 612, 618
         }

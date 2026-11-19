@@ -3,107 +3,86 @@
 @{
     ViewData["Title"] = "Listado de Stock";
 }
+
 <h1>Stock de Productos</h1>
-@* Preguntamos si existe la clave "Ok" en TempData *@
+
 @if (TempData["Ok"] != null)
 {
     <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <i class="bi bi-check-circle-fill me-2"></i> @TempData["Ok"]
-        <button type="button" class="btn-close" data-bs-dismiss="alert" arialabel="Close"></button>
+        <i class="bi bi-check-circle-fill me-2"></i>
+        @TempData["Ok"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 }
-@* Alerta de Error *@
+
 @if (TempData["Error"] != null)
 {
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <i class="bi bi-exclamation-triangle-fill me-2"></i> @TempData["Error"]
-        <button type="button" class="btn-close" data-bs-dismiss="alert" arialabel="Close"></button>
+        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+        @TempData["Error"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 }
+
 <p>
     <a asp-action="Create" class="btn btn-primary">+ Nuevo Producto</a>
 </p>
+
 <form method="get" class="row mb-3">
     <div class="col-auto">
         <input type="text" name="buscar" class="form-control"
                placeholder="Buscar..." />
     </div>
+
     <div class="col-auto">
-        <select name="buscarCategoria" class="form-select" aspitems="ViewBag.Categorias">
+        <select name="buscarCategoria" class="form-select"
+                asp-items="ViewBag.Categorias">
             <option value="">Todas las categorías</option>
         </select>
     </div>
+
     <div class="col-auto">
         <button type="submit" class="btn btn-secondary">Buscar</button>
     </div>
 </form>
+
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Codigo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Nombre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Descripcion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CantidadStock)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PrecioCosto)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PrecioVenta)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.idCategoria)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UnidadDeMedida)
-            </th>
-            21
-
-            <th></th>
+            <th>Código</th>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Cantidad en Stock</th>
+            <th>Precio de Costo</th>
+            <th>Precio de Venta</th>
+            <th>Categoría</th>
+            <th>Unidad de Medida</th>
+            <th>Acciones</th>
         </tr>
     </thead>
+
     <tbody>
         @foreach (var item in Model)
         {
             <tr>
-                <td>
-                    @Html.DisplayFor(model => item.Codigo)
-                </td>
-                <td>
-                    @Html.DisplayFor(model => item.Nombre)
-                </td>
-                <td>
-                    @Html.DisplayFor(model => item.Descripcion)
-                </td>
-                <td>
-                    @Html.DisplayFor(model => item.CantidadStock)
-                </td>
-                <td>
-                    @Html.DisplayFor(model => item.PrecioCosto)
-                </td>
-                <td>
-                    @Html.DisplayFor(model => item.PrecioVenta)
-                </td>
-                <td>
-                    @Html.DisplayFor(model => item.Categorias)
-                </td>
-                <td>
-                    @Html.DisplayFor(model => item.UnidadDeMedida)
-                </td>
+                <td>@Html.DisplayFor(model => item.Codigo)</td>
+                <td>@Html.DisplayFor(model => item.Nombre)</td>
+                <td>@Html.DisplayFor(model => item.Descripcion)</td>
+                <td>@Html.DisplayFor(model => item.CantidadStock)</td>
+                <td>@Html.DisplayFor(model => item.PrecioCosto)</td>
+                <td>@Html.DisplayFor(model => item.PrecioVenta)</td>
+                <td>@Html.DisplayFor(model => item.CategoriaNombre)</td>
+                <td>@Html.DisplayFor(model => item.UnidadDeMedida)</td>
 
-                <td width="200">
-                    <a asp-action="Details" asp-route-id="@item.id" class="btn
-    btn-sm btn-info">Ver</a>
-                    <a asp-action="Edit" asp-route-id="@item.id" class="btn btnsm btn-warning">Editar</a>
-                    <a asp-action="Delete" asp-route-id="@item.id" class="btn
-    btn-sm btn-danger">Eliminar</a>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.id"
+                       class="btn btn-sm btn-info">Ver</a>
+
+                    <a asp-action="Edit" asp-route-id="@item.id"
+                       class="btn btn-sm btn-warning">Editar</a>
+
+                    <a asp-action="Delete" asp-route-id="@item.id"
+                       class="btn btn-sm btn-danger">Eliminar</a>
                 </td>
             </tr>
         }

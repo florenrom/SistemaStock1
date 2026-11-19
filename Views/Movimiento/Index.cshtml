@@ -1,30 +1,34 @@
 @using NuevoSistemaNat.Models.Enum
-@model IEnumerable<NuevoSistemaNat.Models.Entities.Movimiento>
+@model IEnumerable<NuevoSistemaNat.Models.ViewModels.MovimientoViewModel>
 
-```cshtml
 @{
     ViewData["Title"] = "Stock";
 }
 
 <h1>Movimientos</h1>
 
-@if (TempData["Ok"] != null)
+@if (TempData["OK"] != null)
 {
-    @TempData["Ok"]
+    <p>@TempData["OK"]</p>
 }
 
 @if (TempData["Error"] != null)
 {
-    @TempData["Error"]
+    <p>@TempData["Error"]</p>
 }
 
 <form method="get">
-    <select name="idProducto">
+    <select name="idProducto" asp-items="ViewBag.Productos">
         <option value="">Todos los Productos</option>
     </select>
 
     <select name="tipo">
         <option value="">Todos los Movimientos</option>
+
+        @foreach (var tipo in Enum.GetValues(typeof(TipoMovimiento)))
+        {
+            <option value="@tipo">@tipo</option>
+        }
     </select>
 
     <button type="submit">Buscar</button>
@@ -70,7 +74,7 @@
                         var (badgeClass, texto) = item.Tipo switch
                         {
                             TipoMovimiento.TransferenciaSalida => ("bg-warning text-dark", "Transf. salida"),
-                            TipoMovimiento.TransferenciaEntrada => ("bgsuccess", "Transf. entrada"),
+                            TipoMovimiento.TransferenciaEntrada => ("bg-success", "Transf. entrada"),
                             TipoMovimiento.Entrada => ("bg-primary", "Ingreso"),
                             TipoMovimiento.Salida => ("bg-danger", "Egreso"),
                             _ => ("bg-secondary", item.Tipo.ToString())
@@ -80,11 +84,11 @@
                     <span class="@badgeClass">@texto</span>
                 </td>
 
-                <td>@item.Producto</td>
+                <td>@item.ProductoNombre</td>
 
-                <td>@(item.DepositoOrigen)</td>
+                <td>@item.DepositoOrigenNombre</td>
 
-                <td>@(item.DepositoDestino)</td>
+                <td>@item.DepositoDestinoNombre</td>
 
                 <td>@item.Cantidad</td>
 

@@ -36,7 +36,12 @@ public class MovimientoController : Controller
         if (idProducto.HasValue) query = query.Where(m => m.idProducto ==idProducto);
     
         if (tipo.HasValue) query = query.Where(m => m.Tipo == tipo);
-        ViewBag.Productos = new SelectList(await _context.Productos.OrderBy(p =>p.PrNombre).ToListAsync(), "id", "Nombre");
+        var productos = await _context.Productos
+            .AsNoTracking()
+            .OrderBy(p => p.PrNombre)
+            .ToListAsync();
+        ViewBag.Productos = new SelectList(productos, "Id", "PrNombre");
+
         var movimientos = await query.OrderByDescending(m => m.Fecha).Take(200).ToListAsync();
 
         var model = _mapper.Map<List<MovimientoViewModel>>(movimientos);
@@ -104,7 +109,7 @@ public class MovimientoController : Controller
         model.Proveedores = await LlenarProveedores();
         return View(model);
     }
-    #endregion
+    #endregion Entrada
     #region Salida
     //----------------Registrar Salidas------------------------------
     //GET : MOVIMIENTOS/Salida
@@ -277,36 +282,50 @@ public class MovimientoController : Controller
         .AsNoTracking()
         .OrderBy(c => c.PrNombre)
         .ToListAsync();
-        return new SelectList(productos, "id", "Nombre", idSeleccionado).ToList();
+        return new SelectList(productos, "Id", "PrNombre", idSeleccionado).ToList();
     }
-    private async Task<List<SelectListItem>> ObtenerDepositos(int? idSeleccionado =
-    null)
+    private async Task<List<SelectListItem>> ObtenerDepositos(int? idSeleccionado = null)
     {
         var depositos = await _context.Depositos
         .AsNoTracking()
         .OrderBy(c => c.Nombre)
         .ToListAsync();
 
-     return new SelectList(depositos, "id", "Nombre", idSeleccionado).ToList();
+     return new SelectList(depositos, "Id", "Nombre", idSeleccionado).ToList();
     }
-    private async Task<List<SelectListItem>> ObtenerProveedores(int? idSeleccionado
-    = null)
+    private async Task<List<SelectListItem>> ObtenerProveedores(int? idSeleccionado = null)
     {
         var proveedores = await _context.Proveedores
         .AsNoTracking()
         .OrderBy(c => c.Nombre)
         .ToListAsync();
-        return new SelectList(proveedores, "id", "Nombre",
+        return new SelectList(proveedores, "Id", "Nombre",
        idSeleccionado).ToList();
     }
-    private async Task<List<SelectListItem>> ObetenerCliente(int? idSeleccionado =
-    null)
+    private async Task<List<SelectListItem>> ObetenerCliente(int? idSeleccionado = null)
     {
         var clientes = await _context.Clientes
         .AsNoTracking()
         .OrderBy(c => c.Nombre)
         .ToListAsync();
-        return new SelectList(clientes, "id", "Nombre", idSeleccionado).ToList();
+        return new SelectList(clientes, "Id", "Nombre", idSeleccionado).ToList();
+    }
+    //Métodos 
+    private async Task<List<SelectListItem>> LlenarProductos()
+    {
+        return await ObtenerProductos();
+    }
+    private async Task<List<SelectListItem>> LlenarDepositos()
+    {
+        return await ObtenerDepositos();
+    }
+    private async Task<List<SelectListItem>> LlenarProveedores()
+    {
+        return await ObtenerProveedores();
+    }
+    private async Task<List<SelectListItem>> LlenarClientes()
+    {
+        return await ObetenerCliente();
     }
 
     // Método privado: crea o actualiza el registro StockDeposito
@@ -348,24 +367,6 @@ public class MovimientoController : Controller
             return 0;
         }
     }
-    #endregion
 
-    //Métodos 
-    private async Task<List<SelectListItem>> LlenarProductos()
-    {
-        throw new NotImplementedException();
-    }
-    private async Task<List<SelectListItem>> LlenarDepositos()
-    {
-        throw new NotImplementedException();
-    }
-    private async Task<List<SelectListItem>> LlenarProveedores()
-    {
-        throw new NotImplementedException();
-    }
-    private async Task<List<SelectListItem>> LlenarClientes()
-    {
-        throw new NotImplementedException();
-    }
-
+    #endregion Funciones
 }

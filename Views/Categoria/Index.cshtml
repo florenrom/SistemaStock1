@@ -1,32 +1,32 @@
-@model IEnumerable<NuevoSistemaNat.Models.Entities.Categoria>
+@model IEnumerable<NuevoSistemaNat.Models.ViewModels.CategoriaViewModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Categorías";
 }
 
-<h1>Categorias</h1>
+<h1>Categorías</h1>
 
-@* Preguntamos si existe la clave "Ok" en TempData *@
 @if (TempData["Ok"] != null)
 {
     <div class="alert alert-success alert-dismissible fade show" role="alert">
         <i class="bi bi-check-circle-fill me-2"></i> @TempData["Ok"]
-        <button type="button" class="btn-close" data-bs-dismiss="alert" arialabel="Close"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 }
-@* Alerta de Error *@
-12
+
 @if (TempData["Error"] != null)
 {
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
         <i class="bi bi-exclamation-triangle-fill me-2"></i> @TempData["Error"]
-        <button type="button" class="btn-close" data-bs-dismiss="alert" arialabel="Close"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 }
+
 <p>
-    <a asp-action="Create" class="btn btn-primary">+ Nueva Categoria</a>
+    <a asp-action="Create" class="btn btn-primary">+ Nueva Categoría</a>
 </p>
-<table class=" table table-striped mt-3">
+
+<table class="table table-striped mt-3">
     <thead>
         <tr>
             <th>
@@ -36,12 +36,12 @@
                 @Html.DisplayNameFor(model => model.CADescripcion)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CaActivo)
+                @Html.DisplayNameFor(model => model.Activo)
             </th>
-
             <th>Acciones</th>
         </tr>
     </thead>
+
     <tbody>
         @foreach (var item in Model)
         {
@@ -53,15 +53,16 @@
                     @Html.DisplayFor(model => item.CADescripcion)
                 </td>
                 <td>
-                    @Html.DisplayFor(model => item.CaActivo)
+                    @Html.DisplayFor(model => item.Activo)
                 </td>
-
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Detalles</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Eliminar</a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+
+               

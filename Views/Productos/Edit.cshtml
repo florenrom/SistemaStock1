@@ -1,112 +1,100 @@
 ﻿@using NuevoSistemaNat.Models.Enum
 @model NuevoSistemaNat.Models.ViewModels.ProductoViewModel
-
 @{
- ViewData["Title"] = "Editar Producto";
+    ViewData["Title"] = "Editar Producto";
 }
-<h1>Detalle del Producto</h1>
-<div>
-    <h4>Producto</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Codigo)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Codigo)
-        </dd>
-    </dl>
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Nombre)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Nombre)
-        </dd>
-    </dl>
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Descripcion)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Descripcion)
-        </dd>
-    </dl>
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.idCategoria)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Categorias)
-        </dd>
-    </dl>
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.CantidadStock)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.CantidadStock)
-        </dd>
-    </dl>
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.UnidadDeMedida)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.UnidadDeMedida)
-        </dd>
-    </dl>
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.PrecioCosto)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.PrecioCosto)
-        </dd>
-    </dl>
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.PrecioVenta)
-            27
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.PrecioVenta)
-        </dd>
-    </dl>
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.StockMinimo)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.StockMinimo)
-        </dd>
-    </dl>
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Activo)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Activo)
-        </dd>
-    </dl>
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.CreatedAt)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.CreatedAt)
-        </dd>
-    </dl>
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.UpdatedAt)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.UpdatedAt)
-        </dd>
-    </dl>
+
+<h1>Editar Producto</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="id" />
+            <div class="form-group">
+                <label asp-for="Codigo" class="control-label"></label>
+                <input asp-for="Codigo" class="form-control" />
+                <span asp-validation-for="Codigo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Nombre" class="control-label"></label>
+                <input asp-for="Nombre" class="form-control" />
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Descripcion" class="control-label"></label>
+                <input asp-for="Descripcion" class="form-control" />
+                <span asp-validation-for="Descripcion" class="text
+                danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="form-group mb-3">
+                    <label asp-for="idCategoria" class="form-label"></label>
+
+                    <select asp-for="idCategoria"
+                            asp-items="Model.Categorias"
+                            class="form-select">
+                        <option value="">-- Seleccione una categorÃa --</option>
+                    </select>
+
+                    <span asp-validation-for="idCategoria"
+                          class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="CantidadStock" class="control-label"></label>
+                <input asp-for="CantidadStock" class="form-control" />
+                <span asp-validation-for="CantidadStock" class="text
+                danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UnidadDeMedida" class="control-label"></label>
+                <select asp-for="UnidadDeMedida" class="form-select" 
+                    asp-items="Html.GetEnumSelectList<UnidadMedida>()">
+                </select>
+                <span asp-validation-for="UnidadDeMedida" class="text
+                danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PrecioCosto" class="control-label"></label>
+                <input asp-for="PrecioCosto" class="form-control" />
+                <span asp-validation-for="PrecioCosto" class="text
+                danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PrecioVenta" class="control-label"></label>
+                <input asp-for="PrecioVenta" class="form-control" />
+                <span asp-validation-for="PrecioVenta" class="text
+                danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="StockMinimo" class="control-label"></label>
+                <input asp-for="StockMinimo" class="form-control" />
+                <span asp-validation-for="StockMinimo" class="text
+                danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Activo" class="control-label"></label>
+                <input asp-for="Activo" class="form-check-input" />
+                <span asp-validation-for="Activo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">
+                    Guardar
+                    Cambios
+                </button>
+                <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

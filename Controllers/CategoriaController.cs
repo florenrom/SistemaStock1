@@ -9,6 +9,8 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 public class CategoriaController : Controller
 {
+    //Categorias = await _context.Categorias
+
     private readonly AppDbContext _context;
 
     public CategoriaController(AppDbContext context)

@@ -10,6 +10,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace NuevoSistemaNat.Controllers
 {
+
     public class ProductosController : Controller
     {
         private readonly AppDbContext _context;
@@ -32,7 +33,7 @@ namespace NuevoSistemaNat.Controllers
                 productos = productos.Where(p => p.CaId == buscarCategoria.Value);
 
             ViewBag.Categorias = new SelectList
-            (await _context.Categorias.ToListAsync(), "id", "Nombre");
+            (await _context.Categorias.ToListAsync(), "Id", "CaNombre");
 
             // Mapeo manual de Lista de Entidades -> Lista de ViewModels
             var listaViewModels = productos.Select(p => new ProductoViewModel
@@ -40,7 +41,7 @@ namespace NuevoSistemaNat.Controllers
                 id = p.Id,
                 Codigo = p.PrCodigo,
                 Nombre = p.PrNombre,
-                Descripcion = p.CADescripcion,
+                Descripcion = p.PrDescripcion,
                 PrecioCosto = p.PrPrecioCosto,
                 PrecioVenta = p.PrPrecioVenta,
                 StockMinimo = p.StockMinimo,
@@ -105,7 +106,7 @@ namespace NuevoSistemaNat.Controllers
             .AsNoTracking()
             .OrderBy(c => c.CaNombre)
             .ToListAsync();
-            return new SelectList(categorias, "id", "Nombre", idSeleccionado).ToList();
+            return new SelectList(categorias, "Id", "CaNombre", idSeleccionado).ToList();
         }
 
         // POST: PRODUCTOS/Create
@@ -135,11 +136,11 @@ namespace NuevoSistemaNat.Controllers
                 {
                     PrCodigo = model.Codigo,
                     PrNombre = model.Nombre,
-                    CADescripcion = model.Descripcion,
+                    PrDescripcion = model.Descripcion,
                     PrPrecioCosto = model.PrecioCosto,
                     PrPrecioVenta = model.PrecioVenta,
                     StockMinimo = model.StockMinimo,
-                    Id = model.idCategoria!.Value,
+                    CaId = model.idCategoria!.Value,
                     UnidadDeMedida = model.UnidadDeMedida
                 };
 
@@ -178,11 +179,11 @@ namespace NuevoSistemaNat.Controllers
                 id = producto.Id,
                 Codigo = producto.PrCodigo,
                 Nombre = producto.PrNombre,
-                Descripcion = producto.CADescripcion,
+                Descripcion = producto.PrDescripcion,
                 PrecioCosto = producto.PrPrecioCosto,
                 PrecioVenta = producto.PrPrecioVenta,
                 StockMinimo = producto.StockMinimo,
-                idCategoria = producto.Id,
+                idCategoria = producto.CaId,
                 UnidadDeMedida = producto.UnidadDeMedida
             };
             model.Categorias = await _context.Categorias.Where(c =>c.CaActivo)
@@ -216,11 +217,15 @@ namespace NuevoSistemaNat.Controllers
                     // Actualizar las propiedades del producto con los valores del modelo
                     producto.PrCodigo = model.Codigo;
                     producto.PrNombre = model.Nombre;
-                    producto.CADescripcion = model.Descripcion;
+
+                    producto.PrDescripcion = model.Descripcion;
+
                     producto.PrPrecioCosto = model.PrecioCosto;
                     producto.PrPrecioVenta = model.PrecioVenta;
                     producto.StockMinimo = model.StockMinimo;
-                    producto.Id = model.idCategoria!.Value;
+
+                    producto.CaId = model.idCategoria!.Value;
+
                     producto.UnidadDeMedida = model.UnidadDeMedida;
                     producto.PrActivo = model.Activo;
                     producto.updateAt = DateTime.UtcNow;
@@ -276,7 +281,7 @@ namespace NuevoSistemaNat.Controllers
             PrecioCosto = producto.PrPrecioCosto,
             PrecioVenta = producto.PrPrecioVenta,
             StockMinimo = producto.StockMinimo,
-            idCategoria = producto.Id,
+            idCategoria = producto.CaId,
             CategoriaNombre = producto.Categoria?.CaNombre,
             UnidadDeMedida = producto.UnidadDeMedida
         };
