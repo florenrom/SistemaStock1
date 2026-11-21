@@ -1,4 +1,4 @@
-﻿@model NuevoSistemaNat.Models.ViewModels.OperacionStockViewModel
+﻿@model NuevoSistemaNat.Models.ViewModels.OperacionStockSalidaViewModel
 
 @{
     ViewData["Title"] = "Registrar Salida";
@@ -12,6 +12,7 @@
     </div>
 } 
 <form asp-action="Salida" method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
     <div class="form-group mb-3">
         <label asp-for="idProducto" class="control-label"></label>
         <select asp-for="idProducto" class="form-select" asp-items="Model.Productos">

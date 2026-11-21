@@ -20,11 +20,14 @@ namespace NuevoSistemaNat.Models.ViewModels
         [Range(1, int.MaxValue, ErrorMessage = "La cantidad debe ser mayor a cero.")]
         public int Cantidad { get; set; }
 
+
         [Display(Name = "Proveedor")]
+        [Required(ErrorMessage = "Debe seleccionar un proveedor.")]
         public int? idProveedor { get; set; }
         public List<SelectListItem>? Proveedores { get; set; }
 
         [Display(Name = "Cliente")]
+        [Required(ErrorMessage = "Debe seleccionar un cliente.")]
         public int? idCliente { get; set; }
         public List<SelectListItem>? Clientes { get; set; }
 

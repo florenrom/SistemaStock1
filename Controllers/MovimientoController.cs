@@ -52,7 +52,7 @@ public class MovimientoController : Controller
     //GET : MOVIMIENTOS/Entrada
     public async Task<IActionResult> Entrada()
     {
-        var modelo = new OperacionStockViewModel
+        var modelo = new OperacionStockEntradaViewModel
         {
             Productos = await LlenarProductos(),
             Depositos = await LlenarDepositos(),
@@ -64,7 +64,7 @@ public class MovimientoController : Controller
     //post: MovimientoController/Entrada
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Entrada(OperacionStockViewModel model)
+    public async Task<IActionResult> Entrada(OperacionStockEntradaViewModel model)
     {
         if (ModelState.IsValid)
         {
@@ -115,7 +115,7 @@ public class MovimientoController : Controller
     //GET : MOVIMIENTOS/Salida
     public async Task<IActionResult> Salida()
     {
-        var modelo = new OperacionStockViewModel
+        var modelo = new OperacionStockSalidaViewModel
         {
             Productos = await LlenarProductos(),
             Depositos = await LlenarDepositos(),
@@ -127,7 +127,7 @@ public class MovimientoController : Controller
     //post: MovimientoController/Salida
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Salida(OperacionStockViewModel model)
+    public async Task<IActionResult> Salida(OperacionStockSalidaViewModel model)
     {
         if (ModelState.IsValid)
         {
