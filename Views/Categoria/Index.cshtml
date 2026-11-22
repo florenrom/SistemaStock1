@@ -4,6 +4,10 @@
     ViewData["Title"] = "Categorías";
 }
 
+@* <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+<a asp-action="Details" asp-route-id="@item.Id">Detalles</a> |
+<a asp-action="Delete" asp-route-id="@item.Id">Eliminar</a>
+ *@
 <h1>Categorías</h1>
 
 @if (TempData["Ok"] != null)
@@ -26,7 +30,7 @@
     <a asp-action="Create" class="btn btn-primary">+ Nueva Categoría</a>
 </p>
 
-<table class="table table-striped mt-3">
+<table id="tablaCategorias" class="table table-striped mt-3">
     <thead>
         <tr>
             <th>
@@ -58,7 +62,17 @@
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
                     <a asp-action="Details" asp-route-id="@item.Id">Detalles</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Eliminar</a>
+
+                    <form asp-action="Delete"
+                          asp-route-id="@item.Id"
+                          method="post"
+                          class="form-eliminar d-inline"
+                          data-nombre="@item.CaNombre">
+
+                        <button type="submit" class="btn btn-link text-danger p-0">
+                            Eliminar
+                        </button>
+                    </form>
                 </td>
             </tr>
         }

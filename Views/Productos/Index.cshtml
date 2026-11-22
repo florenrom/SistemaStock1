@@ -4,6 +4,8 @@
     ViewData["Title"] = "Listado de Stock";
 }
 
+
+
 <h1>Stock de Productos</h1>
 
 @if (TempData["Ok"] != null)
@@ -46,7 +48,7 @@
     </div>
 </form>
 
-<table class="table">
+<table id ="tablaProductos" class="table">
     <thead>
         <tr>
             <th>Código</th>
@@ -81,8 +83,16 @@
                     <a asp-action="Edit" asp-route-id="@item.id"
                        class="btn btn-sm btn-warning">Editar</a>
 
-                    <a asp-action="Delete" asp-route-id="@item.id"
-                       class="btn btn-sm btn-danger">Eliminar</a>
+                    <form asp-action="Delete"
+                          asp-route-id="@item.id"
+                          method="post"
+                          class="form-eliminar d-inline"
+                          data-nombre="@item.Nombre">
+
+                        <button type="submit" class="btn btn-sm btn-danger">
+                            Eliminar
+                        </button>
+                    </form>
                 </td>
             </tr>
         }

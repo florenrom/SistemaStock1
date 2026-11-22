@@ -7,7 +7,7 @@ using NuevoSistemaNat.Models.ViewModels;
 namespace NuevoSistemaNat.Controllers
 {
 
-    //model.UltimosMovimientos
+    //StockTotal = _context.StockDepositos
 
     public class DashboardController : Controller
     {

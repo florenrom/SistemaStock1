@@ -15,6 +15,4 @@
         TransferenciaEntrada = 3,
         TransferenciaSalida = 4
     }
-
-
 }
