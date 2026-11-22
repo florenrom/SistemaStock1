@@ -382,7 +382,7 @@ namespace NuevoSistemaNat.Controllers
             }
             var producto = await _context.Productos.FindAsync(id);
                
-            if (producto != null)
+            if (producto == null)
             {
                 return NotFound();
             }
