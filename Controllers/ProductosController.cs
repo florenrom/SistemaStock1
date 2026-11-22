@@ -10,7 +10,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace NuevoSistemaNat.Controllers
 {
-
+    //var listaViewModels = productos.Select(p => new ProductoViewModel{
     public class ProductosController : Controller
     {
         private readonly AppDbContext _context;
@@ -36,7 +36,7 @@ namespace NuevoSistemaNat.Controllers
             (await _context.Categorias.ToListAsync(), "Id", "CaNombre");
 
             // Mapeo manual de Lista de Entidades -> Lista de ViewModels
-            var listaViewModels = productos.Select(p => new ProductoViewModel
+            var listaViewModels = await productos.Select(p => new ProductoViewModel
             {
                 id = p.Id,
                 Codigo = p.PrCodigo,
@@ -45,9 +45,14 @@ namespace NuevoSistemaNat.Controllers
                 PrecioCosto = p.PrPrecioCosto,
                 PrecioVenta = p.PrPrecioVenta,
                 StockMinimo = p.StockMinimo,
+
+                CantidadStock = _context.StockDepositos
+                    .Where(s => s.idProducto == p.Id)
+                    .Sum(s => (int?)s.Cantidad) ?? 0,
+
                 CategoriaNombre = p.Categoria!.CaNombre,
                 UnidadDeMedida = p.UnidadDeMedida
-            }).ToList();
+            }).ToListAsync();
             return View(listaViewModels);
         }
         // GET: PRODUCTOS/Details/5
