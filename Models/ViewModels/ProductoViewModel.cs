@@ -7,6 +7,7 @@ namespace NuevoSistemaNat.Models.ViewModels
     {
         public int id { get; set; }
 
+        [Required(ErrorMessage = "El código es obligatorio")]
         [StringLength(50, ErrorMessage = "Máximo 50 caracteres")]
         [Display(Name = "Código")]
         public string? Codigo { get; set; }
@@ -20,14 +21,16 @@ namespace NuevoSistemaNat.Models.ViewModels
         [Display(Name = "Descripción")]
         public string? Descripcion { get; set; }
 
+        [Required(ErrorMessage = "La categoria es obligatoria")]
         [Display(Name = "Categoría")]
         public int? idCategoria { get; set; }
         public string? CategoriaNombre { get; set; }
 
         // Propiedad exclusiva para llenar el combo box en la vista
         public List<SelectListItem>? Categorias { get; set; }
-
+        [Display(Name = "Depósito")]
         [Required(ErrorMessage = "Debe seleccionar un depósito.")]
+
         public int? idDeposito { get; set; }
 
         public List<SelectListItem>? Depositos { get; set; }

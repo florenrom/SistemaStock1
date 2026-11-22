@@ -18,7 +18,7 @@ namespace NuevoSistemaNat.Models.Entities
 
         [StringLength(200, ErrorMessage = "La descripción no puede superar los 200 caracteres.")]
         [Display(Name = "Descripción")]
-        public string PrDescripcion { get; set; } = string.Empty;
+        public string? PrDescripcion { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Debe seleccionar una unidad de medida.")]
         [Display(Name = "Unidad de Medida")]

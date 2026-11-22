@@ -104,12 +104,17 @@ namespace NuevoSistemaNat.Controllers
                     .ToListAsync(),
 
                 Depositos = await ObtenerDepositos()
+
+
+
             };
             return View(model);
+
         }
         private async Task<List<SelectListItem>> ObtenerCategorias(int? idSeleccionado = null)
         {
             var categorias = await _context.Categorias
+            .Where(c => c.CaActivo)
             .AsNoTracking()
             .OrderBy(c => c.CaNombre)
             .ToListAsync();
@@ -119,6 +124,7 @@ namespace NuevoSistemaNat.Controllers
         private async Task<List<SelectListItem>> ObtenerDepositos(int? idSeleccionado = null)
         {
             var depositos = await _context.Depositos
+                .Where(d => d.CaActivo)
                 .AsNoTracking()
                 .OrderBy(d => d.Nombre)
                 .ToListAsync();
@@ -133,7 +139,10 @@ namespace NuevoSistemaNat.Controllers
         [ValidateAntiForgeryToken]
          public async Task<IActionResult> Create(ProductoViewModel model)
          {
-            //ModelState.AddModelError("Nomb
+
+            bool existeCodigo = await _context.Productos
+               .AnyAsync(p => p.PrCodigo != null &&
+                  p.PrCodigo.ToLower() == model.Codigo!.ToLower());
 
             if (ModelState.IsValid)
             {
@@ -142,6 +151,7 @@ namespace NuevoSistemaNat.Controllers
                 .AnyAsync(c => c.PrCodigo!.ToLower() == model.Codigo!.ToLower() &&
                c.PrNombre.ToLower() == model.Nombre.ToLower());
 
+                
 
                 if (existeProducto)
                 {
@@ -152,40 +162,61 @@ namespace NuevoSistemaNat.Controllers
 
                     return View(model);
                 }
-                var producto = new Producto
+                using var transaction = await _context.Database.BeginTransactionAsync();
+
+                try
                 {
-                    PrCodigo = model.Codigo,
-                    PrNombre = model.Nombre,
-                    PrDescripcion = model.Descripcion,
-                    PrPrecioCosto = model.PrecioCosto,
-                    PrPrecioVenta = model.PrecioVenta,
-                    StockMinimo = model.StockMinimo,
-                    CaId = model.idCategoria!.Value,
-                    UnidadDeMedida = model.UnidadDeMedida
-                };
+                    var producto = new Producto
+                    {
+                        PrCodigo = model.Codigo,
+                        PrNombre = model.Nombre,
+                        PrDescripcion = model.Descripcion ?? string.Empty,
+                        PrPrecioCosto = model.PrecioCosto,
+                        PrPrecioVenta = model.PrecioVenta,
+                        StockMinimo = model.StockMinimo,
+                        CaId = model.idCategoria!.Value,
+                        UnidadDeMedida = model.UnidadDeMedida
+                    };
 
-                _context.Add(producto);
-                await _context.SaveChangesAsync();
-                var stockDeposito = new StockDeposito
+                    _context.Add(producto);
+                    await _context.SaveChangesAsync();
+
+                    var stockDeposito = new StockDeposito
+                    {
+                        idProducto = producto.Id,
+                        idDeposito = model.idDeposito!.Value,
+                        Cantidad = model.CantidadStock
+                    };
+
+                    _context.StockDepositos.Add(stockDeposito);
+                    await _context.SaveChangesAsync();
+
+                    await transaction.CommitAsync();
+
+                    TempData["Ok"] = "Producto creado correctamente.";
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (DbUpdateException)
                 {
-                    idProducto = producto.Id,
-                    idDeposito = model.idDeposito!.Value,
-                    Cantidad = model.CantidadStock
-                };
+                    await transaction.RollbackAsync();
 
-                _context.StockDepositos.Add(stockDeposito);
-                await _context.SaveChangesAsync();
+                    ModelState.AddModelError("", "No se pudo guardar el producto y su stock inicial.");
 
-                TempData["Ok"] = "Producto creado correctamente.";
-                return RedirectToAction(nameof(Index));
+                    model.Categorias = await ObtenerCategorias(model.idCategoria);
+                    model.Depositos = await ObtenerDepositos(model.idDeposito);
+
+                    return View(model);
+                }
             }
             model.Categorias = await ObtenerCategorias(model.idCategoria);
             model.Depositos = await ObtenerDepositos(model.idDeposito);
-
+            
             return View(model);
-        }
-         // GET: PRODUCTOS/Edit/5
-         public async Task<IActionResult> Edit(int? id)
+
+
+         } 
+          // GET: PRODUCTOS/Edit/5
+        public async Task<IActionResult> Edit(int? id)
          {
             if (id == null)
             {
@@ -233,6 +264,17 @@ namespace NuevoSistemaNat.Controllers
             {
                 return NotFound();
             }
+
+            bool existeCodigo = await _context.Productos
+                .AnyAsync(p => p.PrCodigo != null &&
+                          p.PrCodigo.ToLower() == model.Codigo!.ToLower() &&
+                          p.Id != id);
+
+            if (existeCodigo)
+            {
+                ModelState.AddModelError("Codigo", "Ya existe un producto con ese código.");
+            }
+
             if (ModelState.IsValid)
             {
                 try
