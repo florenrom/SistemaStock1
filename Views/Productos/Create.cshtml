@@ -39,6 +39,13 @@
                 <span asp-validation-for="CantidadStock" class="textdanger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="idDeposito" class="control-label">Depósito</label>
+                <select asp-for="idDeposito" class="form-select" asp-items="Model.Depositos">
+                    <option value="">-- Seleccione un depósito --</option>
+                </select>
+                <span asp-validation-for="idDeposito" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="UnidadDeMedida" class="control-label"></label>
                 <select asp-for="UnidadDeMedida"
                         class="form-select"

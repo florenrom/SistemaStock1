@@ -291,7 +291,7 @@ public class MovimientoController : Controller
         .OrderBy(c => c.Nombre)
         .ToListAsync();
 
-     return new SelectList(depositos, "Id", "Nombre", idSeleccionado).ToList();
+        return new SelectList(depositos, "Id", "Nombre", idSeleccionado).ToList();
     }
     private async Task<List<SelectListItem>> ObtenerProveedores(int? idSeleccionado = null)
     {
@@ -299,8 +299,7 @@ public class MovimientoController : Controller
         .AsNoTracking()
         .OrderBy(c => c.Nombre)
         .ToListAsync();
-        return new SelectList(proveedores, "Id", "Nombre",
-       idSeleccionado).ToList();
+        return new SelectList(proveedores, "Id", "Nombre", idSeleccionado).ToList();
     }
     private async Task<List<SelectListItem>> ObetenerCliente(int? idSeleccionado = null)
     {

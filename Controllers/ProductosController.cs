@@ -91,17 +91,19 @@ namespace NuevoSistemaNat.Controllers
 
         // GET: PRODUCTOS/Create
         public async Task<IActionResult> CreateAsync()
-         {
+        {
             var model = new ProductoViewModel
             {
                 Categorias = await _context.Categorias
-                .Where(c =>c.CaActivo)
-                .Select(c => new SelectListItem
-                {
-                    Value = c.Id.ToString(),
-                    Text = c.CaNombre
-                })
-                .ToListAsync()
+                    .Where(c =>c.CaActivo)
+                    .Select(c => new SelectListItem
+                    {
+                        Value = c.Id.ToString(),
+                        Text = c.CaNombre
+                    })
+                    .ToListAsync(),
+
+                Depositos = await ObtenerDepositos()
             };
             return View(model);
         }
@@ -114,13 +116,25 @@ namespace NuevoSistemaNat.Controllers
             return new SelectList(categorias, "Id", "CaNombre", idSeleccionado).ToList();
         }
 
+        private async Task<List<SelectListItem>> ObtenerDepositos(int? idSeleccionado = null)
+        {
+            var depositos = await _context.Depositos
+                .AsNoTracking()
+                .OrderBy(d => d.Nombre)
+                .ToListAsync();
+
+            return new SelectList(depositos, "Id", "Nombre", idSeleccionado).ToList();
+        }
+
         // POST: PRODUCTOS/Create
         // To protect from overposting attacks, enable the specific properties you want to bindto.
-         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
          public async Task<IActionResult> Create(ProductoViewModel model)
          {
+            //ModelState.AddModelError("Nomb
+
             if (ModelState.IsValid)
             {
                 // 1. Validar que no exista en la base de datos (ignorando mayúsculas/minúsculas)
@@ -133,8 +147,9 @@ namespace NuevoSistemaNat.Controllers
                 {
                     // 2. Agregar el error al ModelState para que se muestre en la vista
                     ModelState.AddModelError("Nombre", "Ya existe un producto con ese codigo y nombre.");
+                    model.Categorias = await ObtenerCategorias();
+                    model.Depositos = await ObtenerDepositos(model.idDeposito);
 
-                    // Retorna la misma vista con el modelo para no perder los datos ingresados
                     return View(model);
                 }
                 var producto = new Producto
@@ -151,20 +166,24 @@ namespace NuevoSistemaNat.Controllers
 
                 _context.Add(producto);
                 await _context.SaveChangesAsync();
+                var stockDeposito = new StockDeposito
+                {
+                    idProducto = producto.Id,
+                    idDeposito = model.idDeposito!.Value,
+                    Cantidad = model.CantidadStock
+                };
+
+                _context.StockDepositos.Add(stockDeposito);
+                await _context.SaveChangesAsync();
+
                 TempData["Ok"] = "Producto creado correctamente.";
                 return RedirectToAction(nameof(Index));
             }
-            model.Categorias = await _context.Categorias.Where(c =>c.CaActivo)
-                .Select(c=> new SelectListItem
-                {
-                    Value = c.Id.ToString(),
-                    Text = c.CaNombre
-                })
-                .ToListAsync();
-            {
-                return View(model);
-            }
-         }
+            model.Categorias = await ObtenerCategorias(model.idCategoria);
+            model.Depositos = await ObtenerDepositos(model.idDeposito);
+
+            return View(model);
+        }
          // GET: PRODUCTOS/Edit/5
          public async Task<IActionResult> Edit(int? id)
          {

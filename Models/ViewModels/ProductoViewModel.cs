@@ -27,6 +27,11 @@ namespace NuevoSistemaNat.Models.ViewModels
         // Propiedad exclusiva para llenar el combo box en la vista
         public List<SelectListItem>? Categorias { get; set; }
 
+        [Required(ErrorMessage = "Debe seleccionar un depósito.")]
+        public int? idDeposito { get; set; }
+
+        public List<SelectListItem>? Depositos { get; set; }
+
         [Required]
         [Display(Name = "Unidad de Medida")]
         public UnidadMedida UnidadDeMedida { get; set; }
