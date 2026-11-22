@@ -94,6 +94,12 @@
             @Html.DisplayFor(model => model.UpdatedAt)
         </dd>
     </dl>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.CantidadStock)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.CantidadStock)
+    </dd>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.id">Edit</a> |

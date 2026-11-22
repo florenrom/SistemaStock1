@@ -63,13 +63,18 @@ namespace NuevoSistemaNat.Controllers
                 return NotFound();
             }
 
-            var producto = await _context.Productos.Include(p => p.Categoria)
+            var producto = await _context.Productos
+                .Include(p => p.Categoria)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             if (producto == null)
             {
                 return NotFound();
             }
+            var cantidadStock = await _context.StockDepositos
+                .Where(s => s.idProducto == producto.Id)
+                .SumAsync(s => (int?)s.Cantidad) ?? 0;
+
             // Mapeo manual de Entidad -> ViewModel
             var model = new ProductoViewModel
             {
@@ -79,6 +84,7 @@ namespace NuevoSistemaNat.Controllers
                 PrecioCosto = producto.PrPrecioCosto,
                 PrecioVenta = producto.PrPrecioVenta,
                 StockMinimo = producto.StockMinimo,
+                CantidadStock = cantidadStock,
                 CategoriaNombre = producto.Categoria?.CaNombre,
                 UnidadDeMedida = producto.UnidadDeMedida,
                 Activo = producto.PrActivo,
@@ -132,26 +138,38 @@ namespace NuevoSistemaNat.Controllers
             return new SelectList(depositos, "Id", "Nombre", idSeleccionado).ToList();
         }
 
-        // POST: PRODUCTOS/Create
+        // POST: PRODUCTOS/Create if (ModelState.IsValid)
         // To protect from overposting attacks, enable the specific properties you want to bindto.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
          public async Task<IActionResult> Create(ProductoViewModel model)
          {
-
-            bool existeCodigo = await _context.Productos
-               .AnyAsync(p => p.PrCodigo != null &&
-                  p.PrCodigo.ToLower() == model.Codigo!.ToLower());
+            if (model.idDeposito == null)
+            {
+                ModelState.AddModelError("idDeposito", "Debe seleccionar un depósito.");
+            }
 
             if (ModelState.IsValid)
             {
+                bool existeCodigo = await _context.Productos
+                    .AnyAsync(p => p.PrCodigo != null &&
+                        p.PrCodigo.ToLower() == model.Codigo!.ToLower());
+
+                if (existeCodigo)
+                {
+                    ModelState.AddModelError("Codigo", "Ya existe un producto con ese código.");
+
+                    model.Categorias = await ObtenerCategorias(model.idCategoria);
+                    model.Depositos = await ObtenerDepositos(model.idDeposito);
+
+                    return View(model);
+                }
+
                 // 1. Validar que no exista en la base de datos (ignorando mayúsculas/minúsculas)
                 bool existeProducto = await _context.Productos
                 .AnyAsync(c => c.PrCodigo!.ToLower() == model.Codigo!.ToLower() &&
                c.PrNombre.ToLower() == model.Nombre.ToLower());
-
-                
 
                 if (existeProducto)
                 {
@@ -268,7 +286,7 @@ namespace NuevoSistemaNat.Controllers
             bool existeCodigo = await _context.Productos
                 .AnyAsync(p => p.PrCodigo != null &&
                           p.PrCodigo.ToLower() == model.Codigo!.ToLower() &&
-                          p.Id != id);
+                          p.Id != model.id);
 
             if (existeCodigo)
             {
@@ -276,7 +294,7 @@ namespace NuevoSistemaNat.Controllers
             }
 
             if (ModelState.IsValid)
-            {
+            {// public async Task<IActionResult> Details(int? id)
                 try
                 {
                     var producto = await _context.Productos.FindAsync(id);
@@ -284,7 +302,7 @@ namespace NuevoSistemaNat.Controllers
                     producto.PrCodigo = model.Codigo;
                     producto.PrNombre = model.Nombre;
 
-                    producto.PrDescripcion = model.Descripcion;
+                    producto.PrDescripcion = model.Descripcion ?? string.Empty;
 
                     producto.PrPrecioCosto = model.PrecioCosto;
                     producto.PrPrecioVenta = model.PrecioVenta;
@@ -358,16 +376,37 @@ namespace NuevoSistemaNat.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int? id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
             var producto = await _context.Productos.FindAsync(id);
-                //_context.Productos.Include(c =>c.Movimientos).FirstOrDefaultAsync(c => c.Id == id);
+               
             if (producto != null)
             {
-                //IMPORTANTE!!! Luego validaremos si no tiene movimientos asociados
-                _context.Productos.Remove(producto);
+                return NotFound();
             }
+            bool tieneMovimientos = await _context.Movimientos
+                .AnyAsync(m => m.idProducto == id);
+
+            bool tieneStock = await _context.StockDepositos
+                .AnyAsync(s => s.idProducto == id && s.Cantidad > 0);
+
+            if (tieneMovimientos)
+            {
+                TempData["Error"] = "No se puede eliminar el producto porque tiene movimientos registrados.";
+                return RedirectToAction(nameof(Index));
+            }
+            if (tieneStock)
+            {
+                TempData["Error"] = "No se puede eliminar el producto porque tiene stock disponible.";
+                return RedirectToAction(nameof(Index));
+            }
+            _context.Productos.Remove(producto);
             await _context.SaveChangesAsync();
-            // Mensaje de éxito
+
             TempData["Ok"] = "Producto eliminado con éxito.";
+
             return RedirectToAction(nameof(Index));
         }
         private bool ProductoExists(int? id)
