@@ -1,13 +1,13 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using NuevoSistemaNat.Models.Entities;
 using System;
 using System.Reflection.Emit;
 
-public class AppDbContext : DbContext
+public class AppDbContext : IdentityDbContext<ApplicationUser>
 {
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
-
 
     public DbSet<Producto> Productos { get; set; } = default!;
     public DbSet<Categoria> Categorias { get; set; } = default!;
@@ -19,6 +19,8 @@ public class AppDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
+
         // Evitar delete cascade
         modelBuilder.Entity<Producto>()
         .HasOne(m => m.Categoria) // Un Producto tiene una Categoria
@@ -46,7 +48,5 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<Cliente>().HasData
         (new Cliente{Id = 1,Nombre = "Cliente A",CaActivo = true, createAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc),updateAt = null});
 
-
     }
-
 }
