@@ -3,14 +3,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NuevoSistemaNat.Models.Entities;
 using NuevoSistemaNat.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using System.Collections.Generic;
 using System.Security.Principal;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
+
+[Authorize(Roles = "Administrador,Encargado")]
 public class CategoriaController : Controller
 {
-    //Categorias = await _context.Categorias
-
     private readonly AppDbContext _context;
 
     public CategoriaController(AppDbContext context)

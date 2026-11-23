@@ -1,4 +1,4 @@
-
+using Microsoft.AspNetCore.Authorization;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -12,6 +12,8 @@ using System.Runtime.ConstrainedExecution;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
+
+[Authorize(Roles = "Administrador,Encargado,Operador")]
 public class MovimientoController : Controller
 {
     private readonly AppDbContext _context;
@@ -50,6 +52,7 @@ public class MovimientoController : Controller
     #region Entrada
     //----------------Registrar Entradas------------------------------
     //GET : MOVIMIENTOS/Entrada
+    [Authorize(Roles = "Administrador,Operador")]
     public async Task<IActionResult> Entrada()
     {
         var modelo = new OperacionStockEntradaViewModel
@@ -64,6 +67,7 @@ public class MovimientoController : Controller
     //post: MovimientoController/Entrada
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [Authorize(Roles = "Administrador,Operador")]
     public async Task<IActionResult> Entrada(OperacionStockEntradaViewModel model)
     {
         if (ModelState.IsValid)
@@ -85,7 +89,8 @@ public class MovimientoController : Controller
                     Cantidad = model.Cantidad,
                     idProveedor = model.idProveedor,
                     Observaciones = model.Observaciones,
-                    Fecha = DateTime.Now
+                    Fecha = DateTime.Now,
+                    UsuarioRegistro = User.Identity?.Name ?? "Sistema"
                 };
                 _context.Movimientos.Add(movimiento);
 
@@ -159,7 +164,8 @@ public class MovimientoController : Controller
                         Cantidad = model.Cantidad,
                         idCliente = model.idCliente!.Value,
                         Observaciones = model.Observaciones,
-                        Fecha = DateTime.Now
+                        Fecha = DateTime.Now,
+                        UsuarioRegistro = User.Identity?.Name ?? "Sistema"
                     };
                     _context.Movimientos.Add(movimiento);
                     await _context.SaveChangesAsync();
@@ -236,7 +242,8 @@ public class MovimientoController : Controller
                     idDepositoDestino = model.idDepositoDestino,
                     Cantidad = model.Cantidad,
                     Observaciones = model.Observaciones,
-                    Fecha = DateTime.Now
+                    Fecha = DateTime.Now,
+                    UsuarioRegistro = User.Identity?.Name ?? "Sistema"
                 };
                 _context.Add(movimientoSalida);
 
@@ -251,7 +258,8 @@ public class MovimientoController : Controller
                     idDepositoDestino = model.idDepositoDestino,
                     Cantidad = model.Cantidad,
                     Observaciones = model.Observaciones,
-                    Fecha = DateTime.Now
+                    Fecha = DateTime.Now,
+                    UsuarioRegistro = User.Identity?.Name ?? "Sistema"
                 };
                 _context.Add(movimientoEntrada);
                 // 3. Guardar ambos movimientos y actualizar stocks juntos

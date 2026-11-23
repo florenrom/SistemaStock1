@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +11,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace NuevoSistemaNat.Controllers
 {
-    //var listaViewModels = productos.Select(p => new ProductoViewModel{
+    [Authorize(Roles = "Administrador,Encargado")]
     public class ProductosController : Controller
     {
         private readonly AppDbContext _context;

@@ -6,9 +6,11 @@ using NuevoSistemaNat.Models.Enum;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
+using Microsoft.AspNetCore.Authorization;
 
 namespace NuevoSistemaNat.Controllers
 {
+    [Authorize(Roles = "Administrador,Encargado,Consulta")]
     public class ReporteController : Controller
     {
         private readonly AppDbContext _context;
