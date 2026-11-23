@@ -394,8 +394,13 @@
 
 </div>
 
+
 @section Scripts {
     <script>
+
+        // =====================================
+        // 1. GRÁFICO DE MOVIMIENTOS
+        // =====================================
 
         const ctx = document.getElementById('graficoMovimientos');
 
@@ -446,74 +451,33 @@
             }
         });
 
+
+        // =====================================
+        // 2. GRÁFICO DE PRODUCTOS CON MAYOR STOCK
+        // =====================================
+
         const ctxStock = document.getElementById('graficoMayorStock');
-            new Chart(ctxStock, {
-                type: 'bar',
 
-                data: {
-                    labels: [
-                        @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
-                            Model.TopMayorStock.Select(p => p.Producto)
-                                    ))
-                ],
-
-                datasets: [{
-                    label: 'Unidades disponibles',
-
-                    data: [
-                        @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
-                                                    Model.TopMayorStock.Select(p => p.StockTotal)
-                                            ))
-                    ],
-
-                    backgroundColor: '#198754',
-                    borderRadius: 8,
-                    borderSkipped: false
-                }]
-            },
-
-            options: {
-                indexAxis: 'y',
-                responsive: true,
-                maintainAspectRatio: false,
-
-                plugins: {
-                    legend: {
-                        display: false
-                    }
-                },
-
-                scales: {
-                    x: {
-                        beginAtZero: true
-                    }
-                }
-            }
-         });
-
-       // GRÁFICO DE PRODUCTOS CON MENOR STOCK
-        const ctxMenorStock = document.getElementById('graficoMenorStock');
-
-        new Chart(ctxMenorStock, {
+        new Chart(ctxStock, {
             type: 'bar',
 
             data: {
                 labels: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
-                                    Model.TopMenorStock.Select(p => p.Producto)
+                                    Model.TopMayorStock.Select(p => p.Producto)
                             )),
 
-                datasets: [{
-                    label: 'Unidades disponibles',
+            datasets: [{
+                label: 'Unidades disponibles',
 
-                        data: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
-                                            Model.TopMenorStock.Select(p => p.StockTotal)
-                                    )),
+                    data: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
+                                        Model.TopMayorStock.Select(p => p.StockTotal)
+                                )),
 
-                    backgroundColor: '#dc3545',
-                    borderRadius: 8,
-                    borderSkipped: false
-                }]
-            },
+                backgroundColor: '#198754',
+                borderRadius: 8,
+                borderSkipped: false
+            }]
+        },
 
             options: {
                 indexAxis: 'y',
@@ -537,7 +501,61 @@
             }
         });
 
-                // GRÁFICO DE STOCK POR DEPÓSITO
+
+        // =====================================
+        // 3. GRÁFICO DE PRODUCTOS CON MENOR STOCK
+        // =====================================
+
+        const ctxMenorStock = document.getElementById('graficoMenorStock');
+
+        new Chart(ctxMenorStock, {
+            type: 'bar',
+
+            data: {
+                labels: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
+                                Model.TopMenorStock.Select(p => p.Producto)
+                        )),
+
+            datasets: [{
+                label: 'Unidades disponibles',
+
+                    data: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
+                                        Model.TopMenorStock.Select(p => p.StockTotal)
+                                )),
+
+                backgroundColor: '#dc3545',
+                borderRadius: 8,
+                borderSkipped: false
+            }]
+        },
+
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        ticks: {
+                            precision: 0
+                        }
+                    }
+                }
+            }
+        });
+
+
+        // =====================================
+        // 4. GRÁFICO DE STOCK POR DEPÓSITO
+        // =====================================
+
         const ctxDepositos = document.getElementById('graficoStockDepositos');
 
         new Chart(ctxDepositos, {
@@ -580,7 +598,6 @@
                 }
             }
         });
-
 
     </script>
 }

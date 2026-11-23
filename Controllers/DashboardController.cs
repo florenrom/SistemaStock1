@@ -6,9 +6,6 @@ using NuevoSistemaNat.Models.ViewModels;
 
 namespace NuevoSistemaNat.Controllers
 {
-
-    //StockTotal = _context.StockDepositos
-
     public class DashboardController : Controller
     {
         private readonly AppDbContext _context;
