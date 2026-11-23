@@ -1,6 +1,7 @@
-using Microsoft.EntityFrameworkCore;
-using NuevoSistemaNat.Mappings;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using NuevoSistemaNat.Data;
+using NuevoSistemaNat.Mappings;
 using NuevoSistemaNat.Models.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -36,6 +37,11 @@ builder.Services.ConfigureApplicationCookie(options =>
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    await SeedRoles.InicializarAsync(scope.ServiceProvider);
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
