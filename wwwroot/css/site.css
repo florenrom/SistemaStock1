@@ -486,3 +486,37 @@ body {
     .table .btn {
         border-radius: 7px;
     }
+/* ========================================
+   STOCKFLOW - TABLA DE CLIENTES
+   ======================================== */
+
+.sf-table {
+    background-color: #FFFFFF;
+    border-color: var(--sf-border);
+    border-radius: 10px;
+    overflow: hidden;
+}
+    .sf-table thead th {
+        background-color: var(--sf-green-dark);
+        color: #FFFFFF;
+        font-size: 0.85rem;
+        font-weight: 600;
+        padding: 14px 12px;
+        border-color: rgba(255,255,255,0.15);
+    }
+
+    .sf-table tbody td {
+        padding: 13px 12px;
+        color: var(--sf-text);
+        border-color: var(--sf-border);
+    }
+
+    .sf-table tbody tr:hover > * {
+        background-color: #E7F1EC;
+    }
+
+    .sf-clientes-table .btn {
+        border-radius: 7px;
+        font-size: 0.82rem;
+        padding: 6px 10px;
+    }

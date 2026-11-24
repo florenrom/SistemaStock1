@@ -1,5 +1,4 @@
 ﻿@model IEnumerable<NuevoSistemaNat.Models.ViewModels.ClienteViewModel>
-
 @{
     ViewData["Title"] = "Clientes";
 }
@@ -48,9 +47,9 @@
     @if (Model.Any())
     {
         <div class="table-responsive">
-            <table class="table table-striped table-bordered align-middle">
+            <table class="table table-striped table-bordered align-middle sf-table">
 
-                <thead class="table-dark">
+                <thead>
                     <tr>
                         <th>Nombre / Razón Social</th>
                         <th>Documento</th>
