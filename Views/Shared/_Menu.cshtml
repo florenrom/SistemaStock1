@@ -1,0 +1,199 @@
+﻿@{
+    var controladorActual = ViewContext.RouteData.Values["controller"]?.ToString();
+    var accionActual = ViewContext.RouteData.Values["action"]?.ToString();
+
+    var esAdmin = User.IsInRole("Administrador");
+    var esEncargado = User.IsInRole("Encargado");
+    var esOperador = User.IsInRole("Operador");
+    var esConsulta = User.IsInRole("Consulta");
+
+    var puedeAdministrar = esAdmin || esEncargado;
+    var puedeMoverStock = esAdmin || esEncargado || esOperador;
+}
+
+<aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
+
+    <!-- LOGO -->
+    <div class="sidebar-brand">
+        <a asp-controller="Home" asp-action="Index" class="brand-link">
+            <span class="brand-text fw-light">StockFlow</span>
+        </a>
+    </div>
+
+    <!-- MENÚ -->
+    <div class="sidebar-wrapper">
+        <nav class="mt-2">
+
+            <ul class="nav sidebar-menu flex-column"
+                data-lte-toggle="treeview"
+                role="menu"
+                data-accordion="false">
+
+                <!-- DASHBOARD -->
+                @if (esAdmin || esEncargado)
+                {
+                    <li class="nav-item">
+                        <a asp-controller="Dashboard"
+                           asp-action="Index"
+                           class="nav-link @(controladorActual == "Dashboard" ? "active" : "")">
+                            <i class="nav-icon bi bi-speedometer2"></i>
+                            <p>Dashboard</p>
+                        </a>
+                    </li>
+                }
+
+                <!-- ADMINISTRACIÓN -->
+                @if (esAdmin)
+                {
+                    <li class="nav-header">ADMINISTRACIÓN</li>
+
+                    <li class="nav-item">
+                        <a asp-controller="Usuario"
+                           asp-action="Index"
+                           class="nav-link @(controladorActual == "Usuario" ? "active" : "")">
+                            <i class="nav-icon bi bi-people"></i>
+                            <p>Usuarios</p>
+                        </a>
+                    </li>
+                }
+
+                <!-- CATÁLOGOS -->
+                @if (puedeAdministrar)
+                {
+                    <li class="nav-header">GESTIÓN</li>
+
+                    <li class="nav-item">
+                        <a asp-controller="Categoria"
+                           asp-action="Index"
+                           class="nav-link @(controladorActual == "Categoria" ? "active" : "")">
+                            <i class="nav-icon bi bi-tags"></i>
+                            <p>Categorías</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a asp-controller="Productos"
+                           asp-action="Index"
+                           class="nav-link @(controladorActual == "Productos" ? "active" : "")">
+                            <i class="nav-icon bi bi-box-seam"></i>
+                            <p>Productos</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a asp-controller="Deposito"
+                           asp-action="Index"
+                           class="nav-link @(controladorActual == "Deposito" ? "active" : "")">
+                            <i class="nav-icon bi bi-building"></i>
+                            <p>Depósitos</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a asp-controller="Cliente"
+                           asp-action="Index"
+                           class="nav-link @(controladorActual == "Cliente" ? "active" : "")">
+                            <i class="nav-icon bi bi-person-vcard"></i>
+                            <p>Clientes</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a asp-controller="Proveedor"
+                           asp-action="Index"
+                           class="nav-link @(controladorActual == "Proveedor" ? "active" : "")">
+                            <i class="nav-icon bi bi-truck"></i>
+                            <p>Proveedores</p>
+                        </a>
+                    </li>
+                }
+
+                <!-- INVENTARIO -->
+                <li class="nav-header">INVENTARIO</li>
+
+                <li class="nav-item">
+                    <a asp-controller="Stock"
+                       asp-action="Index"
+                       class="nav-link @(controladorActual == "Stock" ? "active" : "")">
+                        <i class="nav-icon bi bi-clipboard-data"></i>
+                        <p>Consultar stock</p>
+                    </a>
+                </li>
+
+                <!-- MOVIMIENTOS -->
+                @if (puedeMoverStock)
+                {
+                    var movimientosActivo = controladorActual == "Movimiento";
+
+                    <li class="nav-item @(movimientosActivo ? "menu-open" : "")">
+
+                        <a href="#"
+                           class="nav-link @(movimientosActivo ? "active" : "")">
+                            <i class="nav-icon bi bi-arrow-left-right"></i>
+                            <p>
+                                Movimientos
+                                <i class="nav-arrow bi bi-chevron-right"></i>
+                            </p>
+                        </a>
+
+                        <ul class="nav nav-treeview">
+
+                            <li class="nav-item">
+                                <a asp-controller="Movimiento"
+                                   asp-action="Index"
+                                   class="nav-link @(controladorActual == "Movimiento" && accionActual == "Index" ? "active" : "")">
+                                    <i class="nav-icon bi bi-clock-history"></i>
+                                    <p>Historial</p>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a asp-controller="Movimiento"
+                                   asp-action="Entrada"
+                                   class="nav-link @(controladorActual == "Movimiento" && accionActual == "Entrada" ? "active" : "")">
+                                    <i class="nav-icon bi bi-box-arrow-in-down"></i>
+                                    <p>Entrada</p>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a asp-controller="Movimiento"
+                                   asp-action="Salida"
+                                   class="nav-link @(controladorActual == "Movimiento" && accionActual == "Salida" ? "active" : "")">
+                                    <i class="nav-icon bi bi-box-arrow-up"></i>
+                                    <p>Salida</p>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a asp-controller="Movimiento"
+                                   asp-action="Transferencia"
+                                   class="nav-link @(controladorActual == "Movimiento" && accionActual == "Transferencia" ? "active" : "")">
+                                    <i class="nav-icon bi bi-arrow-left-right"></i>
+                                    <p>Transferencia</p>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+                }
+
+                <!-- REPORTES -->
+                @if (esAdmin || esEncargado || esConsulta)
+                {
+                    <li class="nav-header">INFORMES</li>
+
+                    <li class="nav-item">
+                        <a asp-controller="Reporte"
+                           asp-action="Index"
+                           class="nav-link @(controladorActual == "Reporte" ? "active" : "")">
+                            <i class="nav-icon bi bi-file-earmark-bar-graph"></i>
+                            <p>Reportes</p>
+                        </a>
+                    </li>
+                }
+
+            </ul>
+        </nav>
+    </div>
+</aside>
