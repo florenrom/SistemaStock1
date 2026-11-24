@@ -3,9 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using NuevoSistemaNat.Models.Entities;
 using NuevoSistemaNat.Models.Enum;
 using NuevoSistemaNat.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace NuevoSistemaNat.Controllers
 {
+    [Authorize(Roles = "Administrador,Encargado,Operador,Consulta")]
     public class DashboardController : Controller
     {
         private readonly AppDbContext _context;
@@ -16,6 +18,11 @@ namespace NuevoSistemaNat.Controllers
 
         public async Task<IActionResult> Index()
         {
+            if (User.IsInRole("Consulta"))
+            {
+                return RedirectToAction("Index", "Stock");
+            }
+
             var model = new DashboardViewModel();
 
             // =====================================

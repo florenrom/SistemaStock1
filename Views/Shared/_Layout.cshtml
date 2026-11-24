@@ -6,12 +6,9 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-
-    @* <li class="nav-header">GESTIÓN</li> *@
-
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - StockFlow </title>
+    <title>@ViewData["Title"] - StockFlow</title>
 
     <!-- Bootstrap Icons -->
     <link rel="stylesheet"
@@ -111,7 +108,7 @@
                    asp-action="Index"
                    class="brand-link text-decoration-none">
                     <i class="bi bi-box-seam me-2"></i>
-                    <span class="brand-text fw-light"> StockFlow </span>
+                    <span class="brand-text fw-light">StockFlow</span>
                 </a>
             </div>
 
@@ -123,6 +120,7 @@
                         data-lte-toggle="treeview"
                         role="menu">
 
+                        <!-- PANEL DE CONTROL -->
                         <li class="nav-item">
                             <a asp-controller="Dashboard"
                                asp-action="Index"
@@ -134,6 +132,7 @@
 
                         <li class="nav-header">GESTIÓN</li>
 
+                        <!-- ADMINISTRAR USUARIOS -->
                         @if (User.IsInRole("Administrador"))
                         {
                             <li class="nav-item">
@@ -146,6 +145,7 @@
                             </li>
                         }
 
+                        <!-- CATEGORÍAS Y PRODUCTOS -->
                         @if (User.IsInRole("Administrador") || User.IsInRole("Encargado"))
                         {
                             <li class="nav-item">
@@ -167,7 +167,26 @@
                             </li>
                         }
 
-                        @if (User.IsInRole("Administrador") ||User.IsInRole("Encargado") ||User.IsInRole("Operador"))
+                        <!-- CONSULTAR STOCK -->
+                        @if (User.IsInRole("Administrador") ||
+                                                User.IsInRole("Encargado") ||
+                                                User.IsInRole("Operador") ||
+                                                User.IsInRole("Consulta"))
+                        {
+                            <li class="nav-item">
+                                <a asp-controller="Stock"
+                                   asp-action="Index"
+                                   class="nav-link @(controladorActual == "Stock" ? "active" : "")">
+                                    <i class="nav-icon bi bi-clipboard-data"></i>
+                                    <p>Consultar stock</p>
+                                </a>
+                            </li>
+                        }
+
+                        <!-- MOVIMIENTOS -->
+                        @if (User.IsInRole("Administrador") ||
+                                                User.IsInRole("Encargado") ||
+                                                User.IsInRole("Operador"))
                         {
                             <li class="nav-item">
                                 <a asp-controller="Movimiento"
@@ -178,6 +197,7 @@
                                 </a>
                             </li>
 
+                            <!-- REGISTRAR ENTRADA -->
                             @if (User.IsInRole("Administrador") || User.IsInRole("Operador"))
                             {
                                 <li class="nav-item">
@@ -190,6 +210,7 @@
                                 </li>
                             }
 
+                            <!-- REGISTRAR SALIDA -->
                             <li class="nav-item">
                                 <a asp-controller="Movimiento"
                                    asp-action="Salida"
@@ -199,6 +220,7 @@
                                 </a>
                             </li>
 
+                            <!-- TRANSFERENCIAS -->
                             <li class="nav-item">
                                 <a asp-controller="Movimiento"
                                    asp-action="Transferencia"
@@ -209,7 +231,10 @@
                             </li>
                         }
 
-                        @if (User.IsInRole("Administrador") || User.IsInRole("Encargado") || User.IsInRole("Consulta"))
+                        <!-- REPORTES -->
+                        @if (User.IsInRole("Administrador") ||
+                                                User.IsInRole("Encargado") ||
+                                                User.IsInRole("Consulta"))
                         {
                             <li class="nav-item">
                                 <a asp-controller="Reporte"
@@ -232,9 +257,7 @@
 
             <div class="app-content">
                 <div class="container-fluid py-3">
-
                     @RenderBody()
-
                 </div>
             </div>
 
@@ -242,9 +265,7 @@
 
         <!-- PIE DE PÁGINA -->
         <footer class="app-footer">
-            <strong>
-                StockFlow
-            </strong>
+            <strong>StockFlow</strong>
             <span class="float-end d-none d-sm-inline">
                 Trabajo Integrador Final
             </span>
@@ -252,7 +273,7 @@
 
     </div>
 
-    <!-- Scripts -->
+    <!-- SCRIPTS -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/@@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
@@ -271,11 +292,11 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script src="~/js/site.js" asp-append-version="true"></script>
-    
+
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
-   
+
 </body>
 </html>
