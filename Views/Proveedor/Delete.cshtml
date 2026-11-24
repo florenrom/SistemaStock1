@@ -1,0 +1,66 @@
+﻿@model NuevoSistemaNat.Models.ViewModels.ProveedorViewModel
+
+@{
+    ViewData["Title"] = "Desactivar proveedor";
+}
+
+<div class="container">
+    <h1>Desactivar proveedor</h1>
+
+    <div class="alert alert-warning mt-3">
+        <i class="bi bi-exclamation-triangle"></i>
+        ¿Estás seguro de que deseas desactivar este proveedor?
+        El registro se conservará en el sistema.
+    </div>
+
+    <hr />
+
+    <dl class="row">
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Documento)
+        </dt>
+        <dd class="col-sm-9">
+            @(Model.Documento ?? "-")
+        </dd>
+
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Direccion)
+        </dt>
+        <dd class="col-sm-9">
+            @(Model.Direccion ?? "-")
+        </dd>
+
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Telefono)
+        </dt>
+        <dd class="col-sm-9">
+            @(Model.Telefono ?? "-")
+        </dd>
+
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd class="col-sm-9">
+            @(Model.Email ?? "-")
+        </dd>
+    </dl>
+
+    <form asp-action="Delete" method="post">
+        <input type="hidden" asp-for="id" />
+
+        <button type="submit" class="btn btn-danger">
+            <i class="bi bi-trash"></i> Confirmar desactivación
+        </button>
+
+        <a asp-action="Index" class="btn btn-secondary">
+            Cancelar
+        </a>
+    </form>
+</div>

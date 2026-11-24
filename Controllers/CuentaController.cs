@@ -37,6 +37,16 @@ namespace NuevoSistemaNat.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
+            var usuario = await _userManager.FindByEmailAsync(model.Email);
+
+            if (usuario == null || !usuario.Activo)
+            {
+                ModelState.AddModelError(string.Empty,
+                    "Correo electrónico o contraseña incorrectos.");
+
+                return View(model);
+            }
+
             var resultado = await _signInManager.PasswordSignInAsync(
                 model.Email,
                 model.Password,

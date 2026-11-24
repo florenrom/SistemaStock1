@@ -185,7 +185,9 @@ public class CategoriaController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int? id)
     {
-        var categoria = await _context.Categorias.FindAsync(id);
+        var categoria = await _context.Categorias
+         .Include(c => c.Productos)
+         .FirstOrDefaultAsync(c => c.Id == id);
         if (categoria != null)
         {
             // Validamos si tiene productos asociados
