@@ -1,61 +1,61 @@
 @model NuevoSistemaNat.Models.ViewModels.CategoriaViewModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalles de categoría";
 }
 
-<h1>Detalles</h1>
+<div class="sf-crud">
 
-<hr />
-<dl class="row">
-    <dt class="col-sm-2">
-        @Html.DisplayNameFor(model => model.CaNombre)
-    </dt>
-    <dd class="col-sm-10">
-        @Html.DisplayFor(model => model.CaNombre)
-    </dd>
-</dl>
-<dl class="row">
-    <dt class="col-sm-2">
-        @Html.DisplayNameFor(model => model.CADescripcion)
-    </dt>
-    <dd class="col-sm-10">
-        @Html.DisplayFor(model => model.CADescripcion)
-    </dd>
-</dl>
-<dl class="row">
-    <dt class="col-sm-2">
-        @Html.DisplayNameFor(model => model.Activo)
-    </dt>
-    <dd class="col-sm-10">
-        @Html.DisplayFor(model => model.Activo)
-    </dd>
-</dl>
-<dl class="row">
-    <dt class="col-sm-2">
-        @Html.DisplayNameFor(model => model.createAt)
-    </dt>
-    <dd class="col-sm-10">
-        @Html.DisplayFor(model => model.createAt)
-    </dd>
-</dl>
-<dl class="row">
-    <dt class="col-sm-2">
-        @Html.DisplayNameFor(model => model.updateAt)
-    </dt>
-    <dd class="col-sm-10">
-        @Html.DisplayFor(model => model.updateAt)
-    </dd>
-</dl>
-<dl class="row">
-    <dt class="col-sm-2">
-        @Html.DisplayNameFor(model => model.cantidadProductos)
-    </dt>
-    <dd class="col-sm-10">
-        @Html.DisplayFor(model => model.cantidadProductos)
-    </dd>
-</dl>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <h1>Detalles de categoría</h1>
+
+    <p class="sf-crud-description">
+        Consultá la información de la categoría seleccionada.
+    </p>
+
+    <div class="sf-crud-card">
+
+        <h5 class="sf-crud-card-title">Información de la categoría</h5>
+
+        <dl class="row sf-crud-details">
+
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.CaNombre)
+            </dt>
+
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.CaNombre)
+            </dd>
+
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.CADescripcion)
+            </dt>
+
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.CADescripcion)
+            </dd>
+
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Activo)
+            </dt>
+
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Activo)
+            </dd>
+
+        </dl>
+
+        <div class="sf-crud-actions">
+
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">
+                <i class="bi bi-pencil-square me-1"></i>
+                Editar categoría
+            </a>
+
+            <a asp-action="Index" class="btn btn-link text-decoration-none">
+                Volver a la lista
+            </a>
+
+        </div>
+
+    </div>
 </div>
