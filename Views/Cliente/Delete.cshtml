@@ -1,0 +1,55 @@
+﻿@model NuevoSistemaNat.Models.ViewModels.ClienteViewModel
+
+@{
+    ViewData["Title"] = "Desactivar cliente";
+}
+
+<div class="container mt-4">
+    <h2>Desactivar cliente</h2>
+
+    <div class="alert alert-warning mt-3">
+        ¿Estás seguro de que deseas desactivar este cliente?
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-header">
+            <h5 class="mb-0">Datos del cliente</h5>
+        </div>
+
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">Nombre / Razón Social</dt>
+                <dd class="col-sm-9">@Model.Nombre</dd>
+
+                <dt class="col-sm-3">Documento</dt>
+                <dd class="col-sm-9">@(Model.Documento ?? "Sin documento")</dd>
+
+                <dt class="col-sm-3">Dirección</dt>
+                <dd class="col-sm-9">@(Model.Direccion ?? "Sin dirección")</dd>
+
+                <dt class="col-sm-3">Teléfono</dt>
+                <dd class="col-sm-9">@(Model.Telefono ?? "Sin teléfono")</dd>
+
+                <dt class="col-sm-3">Email</dt>
+                <dd class="col-sm-9">@(Model.Email ?? "Sin email")</dd>
+
+                <dt class="col-sm-3">Estado</dt>
+                <dd class="col-sm-9">
+                    <span class="badge bg-success">Activo</span>
+                </dd>
+            </dl>
+
+            <form asp-action="Delete" method="post">
+                <input type="hidden" asp-for="id" />
+
+                <button type="submit" class="btn btn-danger">
+                    Confirmar desactivación
+                </button>
+
+                <a asp-action="Index" class="btn btn-secondary">
+                    Cancelar
+                </a>
+            </form>
+        </div>
+    </div>
+</div>

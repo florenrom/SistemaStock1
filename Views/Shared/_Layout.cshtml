@@ -167,6 +167,22 @@
                             </li>
                         }
 
+                        <li class="nav-item">
+                            <a asp-controller="Deposito"
+                               asp-action="Index"
+                               class="nav-link @(controladorActual == "Deposito" ? "active" : "")">
+                                <i class="nav-icon bi bi-building"></i>
+                                <p>Depósitos</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-controller="Cliente" asp-action="Index"
+                               class="nav-link @(controladorActual == "Cliente" ? "active" : "")">
+                                <i class="nav-icon bi bi-people"></i>
+                                <p>Clientes</p>
+                            </a>
+                        </li>
+
                         <!-- CONSULTAR STOCK -->
                         @if (User.IsInRole("Administrador") ||
                                                 User.IsInRole("Encargado") ||
@@ -195,6 +211,8 @@
                                     <i class="nav-icon bi bi-arrow-left-right"></i>
                                     <p>Movimientos</p>
                                 </a>
+
+
                             </li>
 
                             <!-- REGISTRAR ENTRADA -->

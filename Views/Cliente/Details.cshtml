@@ -1,0 +1,54 @@
+﻿@model NuevoSistemaNat.Models.ViewModels.ClienteViewModel
+
+@{
+    ViewData["Title"] = "Detalle del cliente";
+}
+
+<div class="container mt-4">
+    <h2>Detalle del cliente</h2>
+
+    <div class="card shadow-sm mt-3">
+        <div class="card-header">
+            <h5 class="mb-0">Información del cliente</h5>
+        </div>
+
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">Nombre / Razón Social</dt>
+                <dd class="col-sm-9">@Model.Nombre</dd>
+
+                <dt class="col-sm-3">Documento</dt>
+                <dd class="col-sm-9">@(Model.Documento ?? "Sin documento")</dd>
+
+                <dt class="col-sm-3">Dirección</dt>
+                <dd class="col-sm-9">@(Model.Direccion ?? "Sin dirección")</dd>
+
+                <dt class="col-sm-3">Teléfono</dt>
+                <dd class="col-sm-9">@(Model.Telefono ?? "Sin teléfono")</dd>
+
+                <dt class="col-sm-3">Email</dt>
+                <dd class="col-sm-9">@(Model.Email ?? "Sin email")</dd>
+
+                <dt class="col-sm-3">Estado</dt>
+                <dd class="col-sm-9">
+                    @if (Model.Activo)
+                    {
+                        <span class="badge bg-success">Activo</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">Inactivo</span>
+                    }
+                </dd>
+            </dl>
+
+            <a asp-action="Edit" asp-route-id="@Model.id" class="btn btn-warning">
+                Editar
+            </a>
+
+            <a asp-action="Index" class="btn btn-secondary">
+                Volver
+            </a>
+        </div>
+    </div>
+</div>

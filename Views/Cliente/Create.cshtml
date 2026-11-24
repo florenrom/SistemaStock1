@@ -1,0 +1,89 @@
+﻿@model NuevoSistemaNat.Models.ViewModels.ClienteViewModel
+
+@{
+    ViewData["Title"] = "Nuevo cliente";
+}
+
+<div class="container mt-4">
+
+    <h2>Registrar cliente</h2>
+
+    <div class="card shadow-sm mt-3">
+        <div class="card-header">
+            <h5 class="mb-0">Datos del cliente</h5>
+        </div>
+
+        <div class="card-body">
+
+            <form asp-action="Create" method="post">
+
+                <div asp-validation-summary="ModelOnly"
+                     class="text-danger mb-3"></div>
+
+                <div class="mb-3">
+                    <label asp-for="Nombre" class="form-label"></label>
+                    <input asp-for="Nombre" class="form-control"
+                           placeholder="Nombre o razón social" />
+                    <span asp-validation-for="Nombre"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Documento" class="form-label"></label>
+                    <input asp-for="Documento" class="form-control"
+                           placeholder="DNI (7 u 8 números)" />
+                    <span asp-validation-for="Documento"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Direccion" class="form-label"></label>
+                    <input asp-for="Direccion" class="form-control"
+                           placeholder="Dirección del cliente" />
+                    <span asp-validation-for="Direccion"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Telefono" class="form-label"></label>
+                    <input asp-for="Telefono" class="form-control"
+                           placeholder="Número de teléfono" />
+                    <span asp-validation-for="Telefono"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Email" class="form-label"></label>
+                    <input asp-for="Email" class="form-control"
+                           placeholder="correo@ejemplo.com" />
+                    <span asp-validation-for="Email"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="form-check mb-3">
+                    <input asp-for="Activo" class="form-check-input" />
+                    <label asp-for="Activo" class="form-check-label">
+                        Cliente activo
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    Guardar cliente
+                </button>
+
+                <a asp-action="Index" class="btn btn-secondary">
+                    Cancelar
+                </a>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
