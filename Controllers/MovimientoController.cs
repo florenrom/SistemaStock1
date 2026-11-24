@@ -52,7 +52,7 @@ public class MovimientoController : Controller
     #region Entrada
     //----------------Registrar Entradas------------------------------
     //GET : MOVIMIENTOS/Entrada
-    [Authorize(Roles = "Administrador,Operador")]
+    [Authorize(Roles = "Administrador,Encargado,Operador")]
     public async Task<IActionResult> Entrada()
     {
         var modelo = new OperacionStockEntradaViewModel
@@ -67,7 +67,7 @@ public class MovimientoController : Controller
     //post: MovimientoController/Entrada
     [HttpPost]
     [ValidateAntiForgeryToken]
-    [Authorize(Roles = "Administrador,Operador")]
+    [Authorize(Roles = "Administrador,Encargado,Operador")]
     public async Task<IActionResult> Entrada(OperacionStockEntradaViewModel model)
     {
         if (ModelState.IsValid)

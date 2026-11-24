@@ -215,23 +215,31 @@ namespace NuevoSistemaNat.Controllers
         // POST: Deposito/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int? id)
         {
+            if (id == null)
+                return NotFound();
+
             var deposito = await _context.Depositos.FindAsync(id);
 
             if (deposito == null)
                 return NotFound();
 
+            // Verificar si existen registros de stock asociados
             bool tieneStock = await _context.StockDepositos
-                .AnyAsync(s =>
-                    s.idDeposito == id &&
-                    s.Cantidad > 0);
+                .AnyAsync(s => s.idDeposito == id);
 
             if (tieneStock)
             {
                 TempData["Error"] =
-                    "No se puede desactivar el depósito porque tiene stock disponible.";
+                    "No se puede desactivar el depósito porque tiene registros de stock asociados.";
 
+                return RedirectToAction(nameof(Index));
+            }
+
+            if (!deposito.CaActivo)
+            {
+                TempData["Error"] = "El depósito ya se encuentra desactivado.";
                 return RedirectToAction(nameof(Index));
             }
 

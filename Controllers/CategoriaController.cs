@@ -135,28 +135,45 @@ public class CategoriaController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(int? id, CategoriaViewModel model)
     {
-
-        if (id != model.Id) return NotFound();
+        if (id != model.Id)
+            return NotFound();
 
         if (ModelState.IsValid)
         {
-            var Categoria = await _context.Categorias.FindAsync(id);
-            if (Categoria == null) return NotFound();
+            var categoria = await _context.Categorias.FindAsync(id);
 
-            // Mapeo manual de actualización: asignamos los datos modificados del ViewModel ala entidad rastreada
-            Categoria.CaNombre = model.CaNombre;
-            Categoria.CADescripcion = model.CADescripcion;
-            Categoria.CaActivo = model.Activo;
-            Categoria.updateAt = DateTime.UtcNow;
-            _context.Categorias.Update(Categoria);
+            if (categoria == null)
+                return NotFound();
+
+            // Verificar que no exista otra categoría con el mismo nombre
+            bool nombreDuplicado = await _context.Categorias
+                .AnyAsync(c => c.CaNombre == model.CaNombre && c.Id != id);
+
+            if (nombreDuplicado)
+            {
+                ModelState.AddModelError(
+                    nameof(model.CaNombre),
+                    "Ya existe otra categoría con ese nombre."
+                );
+
+                return View(model);
+            }
+
+            // Actualizar los datos de la categoría
+            categoria.CaNombre = model.CaNombre;
+            categoria.CADescripcion = model.CADescripcion;
+            categoria.CaActivo = model.Activo;
+            categoria.updateAt = DateTime.UtcNow;
+
+            _context.Categorias.Update(categoria);
             await _context.SaveChangesAsync();
 
-            // Guardamos el mensaje en TempData antes de redirigir
             TempData["Ok"] = "¡La categoría se ha modificado con éxito!";
+
             return RedirectToAction(nameof(Index));
         }
-        return View(model);
 
+        return View(model);
     }
 
     // GET: CATEGORIAS/Delete/5
@@ -185,23 +202,29 @@ public class CategoriaController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int? id)
     {
-        var categoria = await _context.Categorias
-         .Include(c => c.Productos)
-         .FirstOrDefaultAsync(c => c.Id == id);
-        if (categoria != null)
+        if (id == null)
+            return NotFound();
+
+        var categoria = await _context.Categorias.FindAsync(id);
+
+        if (categoria == null)
+            return NotFound();
+
+        // Verificar si existen productos asociados
+        bool tieneProductos = await _context.Productos
+            .AnyAsync(p => p.CaId == id);
+
+        if (tieneProductos)
         {
-            // Validamos si tiene productos asociados
-            if (categoria.Productos.Any())
-            {
-                // Guardamos el mensaje de error en TempData
-                TempData["Error"] = $"No se puede eliminar la categoría'{categoria.CaNombre}' porque tiene productos asociados.";
-                return RedirectToAction(nameof(Index));
-            }
-            _context.Categorias.Remove(categoria);
-            await _context.SaveChangesAsync();
-            // Mensaje de éxito
-            TempData["Ok"] = "Categoría eliminada con éxito.";
+            TempData["Error"] = $"No se puede eliminar la categoría '{categoria.CaNombre}' porque tiene productos asociados.";
+            return RedirectToAction(nameof(Index));
         }
+
+        _context.Categorias.Remove(categoria);
+
+        await _context.SaveChangesAsync();
+
+        TempData["Ok"] = "Categoría eliminada con éxito.";
 
         return RedirectToAction(nameof(Index));
     }

@@ -378,32 +378,36 @@ namespace NuevoSistemaNat.Controllers
         public async Task<IActionResult> DeleteConfirmed(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
+
             var producto = await _context.Productos.FindAsync(id);
-               
+
             if (producto == null)
-            {
                 return NotFound();
-            }
+
+            // Verificar si existen movimientos asociados
             bool tieneMovimientos = await _context.Movimientos
                 .AnyAsync(m => m.idProducto == id);
 
+            // Verificar si existen registros de stock asociados,
+            // independientemente de la cantidad disponible
             bool tieneStock = await _context.StockDepositos
-                .AnyAsync(s => s.idProducto == id && s.Cantidad > 0);
+                .AnyAsync(s => s.idProducto == id);
 
             if (tieneMovimientos)
             {
                 TempData["Error"] = "No se puede eliminar el producto porque tiene movimientos registrados.";
                 return RedirectToAction(nameof(Index));
             }
+
             if (tieneStock)
             {
-                TempData["Error"] = "No se puede eliminar el producto porque tiene stock disponible.";
+                TempData["Error"] = "No se puede eliminar el producto porque tiene registros de stock asociados.";
                 return RedirectToAction(nameof(Index));
             }
+
             _context.Productos.Remove(producto);
+
             await _context.SaveChangesAsync();
 
             TempData["Ok"] = "Producto eliminado con éxito.";

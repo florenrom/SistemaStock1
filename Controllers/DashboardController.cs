@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace NuevoSistemaNat.Controllers
 {
-    [Authorize(Roles = "Administrador,Encargado,Operador,Consulta")]
+    [Authorize(Roles = "Administrador,Encargado,Consulta")]
     public class DashboardController : Controller
     {
         private readonly AppDbContext _context;

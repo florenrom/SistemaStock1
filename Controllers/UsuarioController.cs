@@ -7,6 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace NuevoSistemaNat.Controllers
 {
+//    var usuario = await _userManager.FindByIdAsync(model.Id);
+
+//if (usuario == null)
+//    return NotFound();
+
     [Authorize(Roles = "Administrador")]
     public class UsuarioController : Controller
     {
@@ -155,6 +160,22 @@ namespace NuevoSistemaNat.Controllers
 
             if (usuario == null)
                 return NotFound();
+
+            // Evitar que el administrador desactive su propia cuenta
+            var usuarioActualId = _userManager.GetUserId(User);
+
+            if (usuario.Id == usuarioActualId && !model.Activo)
+            {
+                ModelState.AddModelError(
+                    string.Empty,
+                    "No puedes desactivar tu propia cuenta."
+                );
+
+                ViewBag.Roles = new SelectList(
+                    _roleManager.Roles.ToList(), "Name", "Name", model.Rol);
+
+                return View(model);
+            }
 
             usuario.Nombre = model.Nombre;
             usuario.Email = model.Email;

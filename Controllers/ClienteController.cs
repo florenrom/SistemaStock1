@@ -91,10 +91,27 @@ namespace NuevoSistemaNat.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
+            // Obtener el DNI sin espacios al principio o al final
+            string? documento = model.Documento?.Trim();
+
+            // Comprobar si el DNI ya está registrado
+            bool documentoDuplicado = await _context.Clientes
+                .AnyAsync(c => c.Documento == documento);
+
+            if (!string.IsNullOrEmpty(documento) && documentoDuplicado)
+            {
+                ModelState.AddModelError(
+                    nameof(model.Documento),
+                    "Ya existe un cliente registrado con ese DNI."
+                );
+
+                return View(model);
+            }
+
             var cliente = new Cliente
             {
                 Nombre = model.Nombre.Trim(),
-                Documento = model.Documento?.Trim(),
+                Documento = documento,
                 Direccion = model.Direccion?.Trim(),
                 Telefono = model.Telefono?.Trim(),
                 Email = model.Email?.Trim(),
@@ -151,8 +168,24 @@ namespace NuevoSistemaNat.Controllers
             if (cliente == null)
                 return NotFound();
 
+            // Verificar que el DNI no pertenezca a otro cliente
+            string? documento = model.Documento?.Trim();
+
+            bool documentoDuplicado = await _context.Clientes
+                .AnyAsync(c => c.Documento == documento && c.Id != id);
+
+            if (!string.IsNullOrEmpty(documento) && documentoDuplicado)
+            {
+                ModelState.AddModelError(
+                    nameof(model.Documento),
+                    "Ya existe otro cliente registrado con ese DNI."
+                );
+
+                return View(model);
+            }
+
             cliente.Nombre = model.Nombre.Trim();
-            cliente.Documento = model.Documento?.Trim();
+            cliente.Documento = documento;
             cliente.Direccion = model.Direccion?.Trim();
             cliente.Telefono = model.Telefono?.Trim();
             cliente.Email = model.Email?.Trim();
@@ -196,12 +229,21 @@ namespace NuevoSistemaNat.Controllers
         // POST: Cliente/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int? id)
         {
+            if (id == null)
+                return NotFound();
+
             var cliente = await _context.Clientes.FindAsync(id);
 
             if (cliente == null)
                 return NotFound();
+
+            if (!cliente.CaActivo)
+            {
+                TempData["Error"] = "El cliente ya se encuentra desactivado.";
+                return RedirectToAction(nameof(Index));
+            }
 
             cliente.CaActivo = false;
             cliente.updateAt = DateTime.UtcNow;
