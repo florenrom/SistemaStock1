@@ -1,38 +1,48 @@
+
+/* ========================================
+   1. CONFIGURACIÓN GENERAL
+   ======================================== */
+
 html {
-  font-size: 14px;
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
+    html {
+        font-size: 16px;
+    }
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    background-color: var(--sf-background);
+    color: var(--sf-text);
 }
 
-.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-  color: var(--bs-secondary-color);
-  text-align: end;
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
-.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-  text-align: start;
+.form-floating > .form-control-plaintext::placeholder,
+.form-floating > .form-control::placeholder {
+    color: var(--bs-secondary-color);
+    text-align: end;
+}
+
+.form-floating > .form-control-plaintext:focus::placeholder,
+.form-floating > .form-control:focus::placeholder {
+    text-align: start;
 }
 
 
 /* ========================================
-   STOCKFLOW - PALETA Y ESTILOS DEL SISTEMA
+   2. PALETA DE COLORES STOCKFLOW
    ======================================== */
 
 :root {
@@ -49,14 +59,10 @@ body {
     --sf-border: #E8E5DF;
 }
 
-/* Fondo general del panel */
 
-body {
-    background-color: var(--sf-background);
-    color: var(--sf-text);
-}
-
-/* Encabezado de bienvenida */
+/* ========================================
+   3. BIENVENIDA
+   ======================================== */
 
 .sf-welcome {
     background: linear-gradient(120deg, var(--sf-green-dark), var(--sf-green));
@@ -77,7 +83,16 @@ body {
         opacity: 0.88;
     }
 
-/* Tarjetas de indicadores */
+.app-main .sf-welcome h1,
+.app-main .sf-welcome h2,
+.app-main .sf-welcome h3 {
+    color: #FFFFFF;
+}
+
+
+/* ========================================
+   4. TARJETAS E INDICADORES
+   ======================================== */
 
 .sf-kpi {
     background: var(--sf-white);
@@ -142,7 +157,10 @@ body {
     background: #FBE9E9;
 }
 
-/* Paneles y secciones */
+
+/* ========================================
+   5. PANELES Y SECCIONES
+   ======================================== */
 
 .sf-panel {
     background: var(--sf-white);
@@ -160,7 +178,10 @@ body {
     margin-bottom: 18px;
 }
 
-/* Acciones rápidas */
+
+/* ========================================
+   6. ACCIONES RÁPIDAS
+   ======================================== */
 
 .sf-action {
     display: flex;
@@ -193,28 +214,94 @@ body {
     color: var(--sf-green);
 }
 
-/* Tablas */
 
-.sf-table {
-    margin-bottom: 0;
+/* ========================================
+   7. TABLAS STOCKFLOW Y DATATABLES
+   ======================================== */
+
+.table {
     vertical-align: middle;
 }
 
-    .sf-table thead th {
-        color: var(--sf-muted);
-        font-size: 0.82rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        border-bottom: 1px solid var(--sf-border);
-        padding: 12px;
-    }
+.sf-table {
+    width: 100%;
+    margin-bottom: 0;
+    background-color: #FFFFFF;
+    border-color: var(--sf-border);
+    border-radius: 10px;
+    vertical-align: middle;
+}
 
-    .sf-table tbody td {
-        padding: 13px 12px;
-        border-color: var(--sf-border);
-    }
+/* Encabezados generales */
 
-/* Estados y advertencias */
+.table thead th {
+    background-color: #F6F4EF;
+    color: var(--sf-green-dark);
+    font-weight: 600;
+    border-bottom: 2px solid var(--sf-border);
+    white-space: nowrap;
+}
+
+/* Encabezados de las tablas StockFlow */
+
+.sf-table thead th {
+    background-color: var(--sf-green-dark);
+    color: #FFFFFF;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 14px 12px;
+    border-color: rgba(255, 255, 255, 0.15);
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+/* Corrección específica para DataTables */
+
+table.sf-table.dataTable thead > tr > th,
+table.sf-table.dataTable thead > tr > td {
+    background-color: var(--sf-green-dark) !important;
+    color: #FFFFFF !important;
+}
+
+/* Celdas */
+
+.sf-table tbody td {
+    padding: 13px 12px;
+    color: var(--sf-text);
+    border-color: var(--sf-border);
+}
+
+.table td,
+.table th {
+    padding: 12px 14px;
+}
+
+/* Efecto al pasar el cursor */
+
+.table tbody tr:hover {
+    background-color: #F0F6F2;
+}
+
+.sf-table tbody tr:hover > * {
+    background-color: #E7F1EC;
+}
+
+/* Botones dentro de las tablas */
+
+.table .btn {
+    border-radius: 7px;
+}
+
+.sf-table .btn {
+    border-radius: 7px;
+    font-size: 0.82rem;
+    padding: 6px 10px;
+}
+
+
+/* ========================================
+   8. ETIQUETAS Y ESTADOS
+   ======================================== */
 
 .sf-badge-warning {
     background: #FFF3D6;
@@ -252,38 +339,18 @@ body {
     font-weight: 600;
 }
 
-/* Adaptación a pantallas pequeñas */
-
-@media (max-width: 768px) {
-    .sf-welcome {
-        padding: 20px;
-    }
-
-    .sf-kpi {
-        padding: 16px;
-    }
-
-    .sf-kpi-value {
-        font-size: 1.4rem;
-    }
-
-    .sf-panel {
-        padding: 16px;
-        overflow-x: auto;
-    }
-}
 
 /* ========================================
-   STOCKFLOW - MENÚ LATERAL Y BARRA SUPERIOR
+   9. MENÚ LATERAL
    ======================================== */
 
-/* Menú lateral */
 .app-sidebar.sf-sidebar {
     background: var(--sf-green-dark) !important;
     border-right: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 /* Marca y nombre */
+
 .sf-sidebar .sidebar-brand {
     background: var(--sf-green-dark);
     border-bottom: 1px solid rgba(255, 255, 255, 0.12);
@@ -301,7 +368,8 @@ body {
         font-size: 1.25rem;
     }
 
-/* Separadores del menú */
+/* Separadores */
+
 .sf-sidebar .nav-header {
     color: #B9C9C1;
     font-size: 0.72rem;
@@ -311,6 +379,7 @@ body {
 }
 
 /* Enlaces */
+
 .sf-sidebar .nav-link {
     color: #E5ECE8;
     border-radius: 8px;
@@ -324,7 +393,8 @@ body {
         margin-right: 8px;
     }
 
-    /* Efecto al pasar el cursor */
+    /* Hover */
+
     .sf-sidebar .nav-link:hover {
         background: rgba(255, 255, 255, 0.10);
         color: #FFFFFF;
@@ -335,6 +405,7 @@ body {
         }
 
     /* Opción seleccionada */
+
     .sf-sidebar .nav-link.active {
         background: var(--sf-violet);
         color: #FFFFFF;
@@ -346,41 +417,26 @@ body {
             color: #FFFFFF;
         }
 
-/* Barra superior */
+
+/* ========================================
+   10. BARRA SUPERIOR
+   ======================================== */
+
 .app-header.sf-topbar {
     background: #FFFFFF !important;
     border-bottom: 1px solid var(--sf-border);
 }
 
 .sf-topbar .nav-link {
+    display: flex;
+    align-items: center;
     color: var(--sf-green-dark);
+    transition: color 0.2s ease;
 }
 
     .sf-topbar .nav-link:hover {
         color: var(--sf-violet);
     }
-
-/* Pie de página */
-.app-footer {
-    background: #FFFFFF;
-    border-top: 1px solid var(--sf-border);
-    color: var(--sf-muted);
-}
-
-    .app-footer strong {
-        color: var(--sf-green-dark);
-    }
-
-/* Menú en pantallas pequeñas */
-@media (max-width: 768px) {
-    .sf-sidebar .nav-link {
-        margin-left: 7px;
-        margin-right: 7px;
-    }
-}
-/* ========================================
-   STOCKFLOW - BARRA SUPERIOR
-   ======================================== */
 
 .sf-user-info {
     display: flex;
@@ -394,12 +450,6 @@ body {
         color: var(--sf-green);
     }
 
-.sf-topbar .nav-link {
-    display: flex;
-    align-items: center;
-    transition: color 0.2s ease;
-}
-
 .sf-topbar form {
     margin: 0;
 }
@@ -410,8 +460,10 @@ body {
     cursor: pointer;
     font: inherit;
 }
+
+
 /* ========================================
-   STOCKFLOW - CONTENIDO PRINCIPAL
+   11. CONTENIDO PRINCIPAL
    ======================================== */
 
 .app-content {
@@ -442,7 +494,212 @@ body {
     box-shadow: 0 3px 12px rgba(0, 0, 0, 0.035);
 }
 
+
+/* ========================================
+   12. PIE DE PÁGINA
+   ======================================== */
+
+.app-footer {
+    background: #FFFFFF;
+    border-top: 1px solid var(--sf-border);
+    color: var(--sf-muted);
+}
+
+    .app-footer strong {
+        color: var(--sf-green-dark);
+    }
+
+/* ========================================
+   13. ESTILOS GENERALES CRUD
+   ======================================== */
+
+/* Contenedor principal */
+
+.sf-crud {
+    width: 100%;
+}
+
+/* Descripción debajo del título */
+
+.sf-crud-description {
+    color: var(--sf-muted);
+    margin-top: -12px;
+    margin-bottom: 22px;
+}
+
+/* Tarjetas de formularios y detalles */
+
+.sf-crud-card {
+    background: var(--sf-white);
+    border: 1px solid var(--sf-border);
+    border-radius: 14px;
+    padding: 24px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.035);
+}
+
+/* Título interno de las tarjetas */
+
+.sf-crud-card-title {
+    color: var(--sf-green-dark);
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+/* Etiquetas de los formularios */
+
+.sf-crud .form-label {
+    color: var(--sf-green-dark);
+    font-weight: 600;
+    margin-bottom: 7px;
+}
+
+/* Campos de entrada */
+
+.sf-crud .form-control,
+.sf-crud .form-select {
+    border: 1px solid var(--sf-border);
+    border-radius: 8px;
+    padding: 10px 12px;
+    color: var(--sf-text);
+    background-color: #FFFFFF;
+}
+
+    .sf-crud .form-control:focus,
+    .sf-crud .form-select:focus {
+        border-color: var(--sf-green);
+        box-shadow: 0 0 0 0.2rem rgba(57, 123, 101, 0.15);
+    }
+
+/* Casillas de verificación */
+
+.sf-crud .form-check-input {
+    cursor: pointer;
+}
+
+    .sf-crud .form-check-input:checked {
+        background-color: var(--sf-green);
+        border-color: var(--sf-green);
+    }
+
+.sf-crud .form-check-label {
+    color: var(--sf-text);
+    cursor: pointer;
+}
+
+/* Mensajes de validación */
+
+.sf-crud .text-danger {
+    font-size: 0.85rem;
+}
+
+/* Botones y enlaces de acciones */
+
+.sf-crud-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+    .sf-crud-actions .btn {
+        border-radius: 7px;
+    }
+
+/* Detalles */
+
+.sf-crud-details dt {
+    color: var(--sf-green-dark);
+    font-weight: 600;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.sf-crud-details dd {
+    color: var(--sf-text);
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--sf-border);
+}
+
+/* Aviso de eliminación */
+
+.sf-crud-warning {
+    background-color: #FFF3D6;
+    color: #91630B;
+    border: 1px solid #F1DDAA;
+    border-radius: 9px;
+    padding: 14px 16px;
+    margin-bottom: 22px;
+}
+
+/* Acciones de eliminación */
+
+.sf-crud-delete {
+    color: var(--sf-red) !important;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+    .sf-crud-delete:hover {
+        color: #A83232 !important;
+        text-decoration: underline;
+    }
+
+
+/* ========================================
+   15. DISEÑO RESPONSIVE
+   ======================================== */
+
 @media (max-width: 768px) {
+
+    .sf-crud-card {
+        padding: 17px;
+    }
+
+    .sf-crud-details dt {
+        padding-bottom: 2px;
+    }
+
+    .sf-crud-details dd {
+        padding-top: 2px;
+    }
+
+    .sf-crud-actions {
+        align-items: stretch;
+    }
+}
+
+
+/* ========================================
+   13. DISEÑO RESPONSIVE
+   ======================================== */
+
+@media (max-width: 768px) {
+
+    .sf-welcome {
+        padding: 20px;
+    }
+
+    .sf-kpi {
+        padding: 16px;
+    }
+
+    .sf-kpi-value {
+        font-size: 1.4rem;
+    }
+
+    .sf-panel {
+        padding: 16px;
+        overflow-x: auto;
+    }
+
+    .sf-sidebar .nav-link {
+        margin-left: 7px;
+        margin-right: 7px;
+    }
+
     .app-content .container-fluid {
         padding-left: 12px;
         padding-right: 12px;
@@ -452,71 +709,3 @@ body {
         font-size: 1.5rem;
     }
 }
-/* Mantener el texto blanco del encabezado de bienvenida */
-.app-main .sf-welcome h1,
-.app-main .sf-welcome h2,
-.app-main .sf-welcome h3 {
-    color: #FFFFFF;
-}
-/* ========================================
-   STOCKFLOW - MEJORA DE TABLAS
-   ======================================== */
-
-.table {
-    vertical-align: middle;
-}
-
-    .table thead th {
-        background-color: #F6F4EF;
-        color: var(--sf-green-dark);
-        font-weight: 600;
-        border-bottom: 2px solid var(--sf-border);
-        white-space: nowrap;
-    }
-
-    .table tbody tr:hover {
-        background-color: #F0F6F2;
-    }
-
-    .table td,
-    .table th {
-        padding: 12px 14px;
-    }
-
-    .table .btn {
-        border-radius: 7px;
-    }
-/* ========================================
-   STOCKFLOW - TABLA DE CLIENTES
-   ======================================== */
-
-.sf-table {
-    background-color: #FFFFFF;
-    border-color: var(--sf-border);
-    border-radius: 10px;
-    overflow: hidden;
-}
-    .sf-table thead th {
-        background-color: var(--sf-green-dark);
-        color: #FFFFFF;
-        font-size: 0.85rem;
-        font-weight: 600;
-        padding: 14px 12px;
-        border-color: rgba(255,255,255,0.15);
-    }
-
-    .sf-table tbody td {
-        padding: 13px 12px;
-        color: var(--sf-text);
-        border-color: var(--sf-border);
-    }
-
-    .sf-table tbody tr:hover > * {
-        background-color: #E7F1EC;
-    }
-
-    .sf-table .btn {
-        border-radius: 7px;
-        font-size: 0.82rem;
-        padding: 6px 10px;
-    }
