@@ -64,7 +64,7 @@ public class MovimientoController : Controller
         return View(modelo);
     }
 
-    //post: MovimientoController/Entrada
+    //post: MovimientoController/Entrada )
     [HttpPost]
     [ValidateAntiForgeryToken]
     [Authorize(Roles = "Administrador,Encargado,Operador")]
@@ -101,12 +101,12 @@ public class MovimientoController : Controller
                 TempData["OK"] = "Entrada de stock registrada correctamente.";
                 return RedirectToAction("Index");
             }
-            catch (InvalidOperationException)
+            catch (Exception)
             {
-                // No hace falta hacer Rollback explícito; al salir del 'using var transaction', se deshace solo.
-            TempData["Error"] = "Ocurrió un error al registrar la entrada de stock.";
+                // Si ocurre un error, la transacción se revierte al finalizar el using.
+                TempData["Error"] = "Ocurrió un error al registrar la entrada de stock.";
             }
-            
+
         }
         // Si el modelo no es válido, volver a llenar los select lists y retornar la vista
         model.Productos = await LlenarProductos();
@@ -171,10 +171,10 @@ public class MovimientoController : Controller
                     await _context.SaveChangesAsync();
                     await transaction.CommitAsync();
                    
-                TempData["OK"] = "Salida de stock registrada correctamente.";
-                return RedirectToAction("Index");
+                    TempData["OK"] = "Salida de stock registrada correctamente.";
+                        return RedirectToAction("Index");
                 }
-                catch (InvalidOperationException)
+                catch (Exception)
                 {
                     TempData["Error"] = "Ocurrió un error al registrar la salida de stock.";
                 }
