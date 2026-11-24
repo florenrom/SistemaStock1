@@ -1,80 +1,63 @@
-﻿@model List<NuevoSistemaNat.Models.ViewModels.Usuario.UsuarioViewModel>
+﻿@model NuevoSistemaNat.Models.ViewModels.Usuario.CrearViewModel
 
 @{
-    ViewData["Title"] = "Administrar usuarios";
+    ViewData["Title"] = "Crear usuario";
 }
 
-<div class="container-fluid">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2>Administrar usuarios</h2>
-
-        <a asp-controller="Usuario"
-           asp-action="Crear"
-           class="btn btn-primary">
-            <i class="fas fa-user-plus"></i> Crear usuario
-        </a>
-    </div>
+<div class="container">
+    <h2>Crear usuario</h2>
 
     <div class="card">
-        <div class="card-body table-responsive">
-            <table class="table table-bordered table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Email</th>
-                        <th>Rol</th>
-                        <th>Estado</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
+        <div class="card-body">
+            <form asp-controller="Usuario" asp-action="Crear" method="post">
 
-                <tbody>
-                    @if (Model != null && Model.Any())
-                    {
-                        foreach (var usuario in Model)
-                        {
-                            <tr>
-                                <td>@usuario.Nombre</td>
-                                <td>@usuario.Email</td>
-                                <td>@usuario.Rol</td>
-                                <td>
-                                    @if (usuario.Activo)
-                                    {
-                                        <span class="badge bg-success">Activo</span>
-                                    }
-                                    else
-                                    {
-                                        <span class="badge bg-danger">Inactivo</span>
-                                    }
-                                </td>
-                                <td>
-                                    <a asp-controller="Usuario"
-                                       asp-action="Editar"
-                                       asp-route-id="@usuario.Id"
-                                       class="btn btn-warning btn-sm">
-                                        Editar
-                                    </a>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                                    <a asp-controller="Usuario"
-                                       asp-action="ResetearPassword"
-                                       asp-route-id="@usuario.Id"
-                                       class="btn btn-secondary btn-sm">
-                                        Restablecer contraseña
-                                    </a>
-                                </td>
-                            </tr>
-                        }
-                    }
-                    else
-                    {
-                        <tr>
-                            <td colspan="5" class="text-center">
-                                No hay usuarios registrados.
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+                <div class="mb-3">
+                    <label asp-for="Nombre" class="form-label"></label>
+                    <input asp-for="Nombre" class="form-control" />
+                    <span asp-validation-for="Nombre" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Email" class="form-label"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Password" class="form-label"></label>
+                    <input asp-for="Password" type="password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Rol" class="form-label"></label>
+                    <select asp-for="Rol"
+                            asp-items="ViewBag.Roles"
+                            class="form-select">
+                        <option value="">Seleccione un rol</option>
+                    </select>
+                    <span asp-validation-for="Rol" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    Crear usuario
+                </button>
+
+                <a asp-controller="Usuario"
+                   asp-action="Index"
+                   class="btn btn-secondary">
+                    Volver
+                </a>
+
+            </form>
         </div>
     </div>
 </div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,50 @@
+﻿@model NuevoSistemaNat.Models.ViewModels.DepositoViewModel
+
+@{
+    ViewData["Title"] = "Nuevo depósito";
+}
+
+<div class="container mt-4">
+
+    <h2>Registrar depósito</h2>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-6">
+
+            <form asp-action="Create" method="post">
+                @Html.AntiForgeryToken()
+
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="mb-3">
+                    <label asp-for="Nombre" class="form-label"></label>
+                    <input asp-for="Nombre" class="form-control" />
+                    <span asp-validation-for="Nombre" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Ubicacion" class="form-label"></label>
+                    <input asp-for="Ubicacion" class="form-control" />
+                    <span asp-validation-for="Ubicacion" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    Guardar
+                </button>
+
+                <a asp-action="Index" class="btn btn-secondary">
+                    Volver
+                </a>
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
