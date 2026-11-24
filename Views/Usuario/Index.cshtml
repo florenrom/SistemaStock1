@@ -4,61 +4,112 @@
     ViewData["Title"] = "Administrar usuarios";
 }
 
-<h2>Administrar usuarios</h2>
+<div class="sf-crud">
 
-<div class="mb-3">
-    <a asp-controller="Usuario"
-       asp-action="Crear"
-       class="btn btn-primary">
-        <i class="bi bi-person-plus"></i>
-        Crear usuario
-    </a>
-</div>
+    <h1>Administrar usuarios</h1>
 
-<table class="table table-striped table-bordered align-middle sf-table">
-    <thead>
-        <tr>
-            <th>Nombre</th>
-            <th>Correo electrónico</th>
-            <th>Rol</th>
-            <th>Estado</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
+    <p class="sf-crud-description">
+        Consultá las cuentas registradas, sus roles y su estado de acceso.
+    </p>
 
-    <tbody>
-        @foreach (var usuario in Model)
-        {
-            <tr>
-                <td>@usuario.Nombre</td>
-                <td>@usuario.Email</td>
-                <td>@usuario.Rol</td>
-                <td>
-                    @if (usuario.Activo)
+    <div class="d-flex justify-content-end mb-3">
+        <a asp-controller="Usuario"
+           asp-action="Crear"
+           class="btn btn-primary">
+            <i class="bi bi-person-plus me-1"></i>
+            Crear usuario
+        </a>
+    </div>
+
+    <div class="sf-crud-card">
+
+        <h5 class="sf-crud-card-title">
+            <i class="bi bi-people me-2"></i>
+            Usuarios registrados
+        </h5>
+
+        <div class="table-responsive">
+
+            <table class="table table-striped table-bordered align-middle sf-table">
+
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Correo electrónico</th>
+                        <th>Rol</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @if (Model != null && Model.Any())
                     {
-                        <span class="badge bg-success">Activo</span>
+                        @foreach (var usuario in Model)
+                        {
+                            <tr>
+                                <td>@usuario.Nombre</td>
+
+                                <td>@usuario.Email</td>
+
+                                <td>
+                                    <span class="badge bg-secondary">
+                                        @usuario.Rol
+                                    </span>
+                                </td>
+
+                                <td>
+                                    @if (usuario.Activo)
+                                    {
+                                        <span class="badge bg-success">
+                                            Activo
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-danger">
+                                            Inactivo
+                                        </span>
+                                    }
+                                </td>
+
+                                <td>
+                                    <div class="d-flex flex-wrap gap-2">
+
+                                        <a asp-controller="Usuario"
+                                           asp-action="Editar"
+                                           asp-route-id="@usuario.Id"
+                                           class="btn btn-warning btn-sm">
+                                            <i class="bi bi-pencil-square me-1"></i>
+                                            Editar
+                                        </a>
+
+                                        <a asp-controller="Usuario"
+                                           asp-action="ResetearPassword"
+                                           asp-route-id="@usuario.Id"
+                                           class="btn btn-secondary btn-sm">
+                                            <i class="bi bi-key me-1"></i>
+                                            Restablecer contraseña
+                                        </a>
+
+                                    </div>
+                                </td>
+                            </tr>
+                        }
                     }
                     else
                     {
-                        <span class="badge bg-danger">Inactivo</span>
+                        <tr>
+                            <td colspan="5" class="text-center py-4">
+                                <i class="bi bi-people fs-3 d-block mb-2 text-muted"></i>
+                                No hay usuarios registrados.
+                            </td>
+                        </tr>
                     }
-                </td>
-                <td>
-                    <a asp-controller="Usuario"
-                       asp-action="Editar"
-                       asp-route-id="@usuario.Id"
-                       class="btn btn-warning btn-sm">
-                        Editar
-                    </a>
+                </tbody>
 
-                    <a asp-controller="Usuario"
-                       asp-action="ResetearPassword"
-                       asp-route-id="@usuario.Id"
-                       class="btn btn-secondary btn-sm">
-                        Restablecer contraseña
-                    </a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+            </table>
+
+        </div>
+    </div>
+</div>

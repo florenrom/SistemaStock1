@@ -4,66 +4,72 @@
     ViewData["Title"] = "Desactivar depósito";
 }
 
-<div class="container mt-4">
+<div class="sf-crud">
 
-    <h2>Desactivar depósito</h2>
+    <h1>Desactivar depósito</h1>
 
-    <div class="alert alert-warning mt-3">
-        <i class="bi bi-exclamation-triangle me-2"></i>
-        ¿Estás seguro de que deseas desactivar este depósito?
-        El registro no se eliminará de la base de datos.
-    </div>
+    <p class="sf-crud-description">
+        Revisá los datos antes de confirmar la desactivación.
+    </p>
 
-    <div class="card shadow-sm">
-        <div class="card-header">
-            <h5 class="mb-0">Datos del depósito</h5>
+    <div class="sf-crud-card">
+
+        <h5 class="sf-crud-card-title">Datos del depósito</h5>
+
+        <div class="sf-crud-warning mb-4">
+            <i class="bi bi-exclamation-triangle me-2"></i>
+            ¿Estás seguro de que deseas desactivar este depósito?
+            El registro no se eliminará de la base de datos.
         </div>
 
-        <div class="card-body">
+        <dl class="row sf-crud-details">
 
-            <dl class="row">
+            <dt class="col-sm-4">Identificador</dt>
+            <dd class="col-sm-8">@Model.id</dd>
 
-                <dt class="col-sm-3">Identificador</dt>
-                <dd class="col-sm-9">@Model.id</dd>
+            <dt class="col-sm-4">Nombre</dt>
+            <dd class="col-sm-8">@Model.Nombre</dd>
 
-                <dt class="col-sm-3">Nombre</dt>
-                <dd class="col-sm-9">@Model.Nombre</dd>
+            <dt class="col-sm-4">Ubicación</dt>
+            <dd class="col-sm-8">
+                @(string.IsNullOrWhiteSpace(Model.Ubicacion)
+                                ? "Sin ubicación"
+                                : Model.Ubicacion)
+            </dd>
 
-                <dt class="col-sm-3">Ubicación</dt>
-                <dd class="col-sm-9">
-                    @(string.IsNullOrWhiteSpace(Model.Ubicacion)
-                                        ? "Sin ubicación"
-                                        : Model.Ubicacion)
-                </dd>
+            <dt class="col-sm-4">Estado actual</dt>
+            <dd class="col-sm-8">
+                @if (Model.Activo)
+                {
+                    <span class="badge bg-success">Activo</span>
+                }
+                else
+                {
+                    <span class="badge bg-secondary">Inactivo</span>
+                }
+            </dd>
 
-                <dt class="col-sm-3">Estado actual</dt>
-                <dd class="col-sm-9">
-                    @if (Model.Activo)
-                    {
-                        <span class="badge bg-success">Activo</span>
-                    }
-                    else
-                    {
-                        <span class="badge bg-secondary">Inactivo</span>
-                    }
-                </dd>
+        </dl>
 
-            </dl>
+        <form asp-action="Delete" method="post">
 
-            <form asp-action="Delete" method="post">
-                <input type="hidden" name="id" value="@Model.id" />
+            <input type="hidden" name="id" value="@Model.id" />
+
+            <div class="sf-crud-actions">
 
                 <button type="submit" class="btn btn-danger">
                     <i class="bi bi-ban me-1"></i>
                     Confirmar desactivación
                 </button>
 
-                <a asp-action="Index" class="btn btn-secondary">
+                <a asp-action="Index"
+                   class="btn btn-link text-decoration-none">
                     Cancelar
                 </a>
-            </form>
 
-        </div>
+            </div>
+
+        </form>
+
     </div>
-
 </div>

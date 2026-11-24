@@ -1,51 +1,122 @@
 ﻿@model NuevoSistemaNat.Models.ViewModels.OperacionStockEntradaViewModel
+
 @{
-    ViewData["Title"] = "Registrar Entrada";
+    ViewData["Title"] = "Registrar entrada";
 }
-<h2>Registrar Entrada de Stock</h2>
-@if (TempData["Error"] != null)
-{
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <i class="bi bi-exclamation-triangle-fill me-2"></i> @TempData["Error"]
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+
+<div class="sf-crud">
+
+    <h1>Registrar entrada de stock</h1>
+
+    <p class="sf-crud-description">
+        Registrá el ingreso de productos al depósito y actualizá el stock correspondiente.
+    </p>
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+            @TempData["Error"]
+            <button type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="sf-crud-card">
+
+        <h5 class="sf-crud-card-title">
+            <i class="bi bi-box-arrow-in-down me-2"></i>
+            Datos de la entrada
+        </h5>
+
+        <form asp-action="Entrada" method="post">
+
+            <div asp-validation-summary="All"
+                 class="text-danger mb-3"></div>
+
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="idProducto" class="form-label"></label>
+
+                    <select asp-for="idProducto"
+                            class="form-select"
+                            asp-items="Model.Productos">
+                        <option value="">-- Seleccione un producto --</option>
+                    </select>
+
+                    <span asp-validation-for="idProducto"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="idDepositoOrigen" class="form-label"></label>
+
+                    <select asp-for="idDepositoOrigen"
+                            class="form-select"
+                            asp-items="Model.Depositos">
+                        <option value="">-- Seleccione un depósito --</option>
+                    </select>
+
+                    <span asp-validation-for="idDepositoOrigen"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Cantidad" class="form-label"></label>
+
+                    <input asp-for="Cantidad"
+                           class="form-control"
+                           placeholder="Ingresá la cantidad" />
+
+                    <span asp-validation-for="Cantidad"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="idProveedor" class="form-label"></label>
+
+                    <select asp-for="idProveedor"
+                            class="form-select"
+                            asp-items="Model.Proveedores">
+                        <option value="">-- Seleccione un proveedor --</option>
+                    </select>
+
+                    <span asp-validation-for="idProveedor"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="col-12 mb-3">
+                    <label asp-for="Observaciones" class="form-label"></label>
+
+                    <textarea asp-for="Observaciones"
+                              class="form-control"
+                              rows="3"
+                              placeholder="Observaciones adicionales (opcional)"></textarea>
+
+                    <span asp-validation-for="Observaciones"
+                          class="text-danger"></span>
+                </div>
+
+            </div>
+
+            <div class="sf-crud-actions mt-3">
+
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-check-circle me-1"></i>
+                    Registrar entrada
+                </button>
+
+                <a asp-action="Index"
+                   class="btn btn-link text-decoration-none">
+                    Cancelar
+                </a>
+
+            </div>
+
+        </form>
+
     </div>
-}
-<form asp-action="Entrada" method="post">
-    <div asp-validation-summary="All" class="text-danger"></div>
-    <div class="form-group mb-3">
-        <label asp-for="idProducto" class="control-label"></label>
-        <select asp-for="idProducto" class="form-select" asp-items="Model.Productos">
-            <option value="">-- Seleccione --</option>
-        </select>
-        <span asp-validation-for="idProducto" class="text-danger"></span>
-    </div>
-    <div class="form-group mb-3">
-        <label asp-for="idDepositoOrigen" class="control-label"></label>
-        <select asp-for="idDepositoOrigen" class="form-select" asp-items="Model.Depositos">
-            <option value="">-- Seleccione --</option>
-        </select>
-        <span asp-validation-for="idDepositoOrigen" class="text-danger"></span>
-    </div>
-    <div class="form-group mb-3">
-        <label asp-for="Cantidad" class="control-label"></label>
-        <input asp-for="Cantidad" class="form-control" />
-        <span asp-validation-for="Cantidad" class="text-danger"></span>
-    </div>
-    <div class="form-group mb-3">
-        <label asp-for="idProveedor" class="control-label"></label>
-        <select asp-for="idProveedor" class="form-select" asp-items="Model.Proveedores">
-            <option value="">-- Seleccione --</option>
-        </select>
-        <span asp-validation-for="idProveedor" class="text-danger"></span>
-    </div>
-    <div class="form-group mb-3">
-        <label asp-for="Observaciones" class="control-label"></label>
-        <textarea asp-for="Observaciones" class="form-control"
-                  rows="3"></textarea>
-        <span asp-validation-for="Observaciones" class="text-danger"></span>
-    </div>
-    <div class="form-group mb-3">
-        <button type="submit" class="btn btn-primary">Registrar Entrada</button>
-        <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
-    </div>
-</form>
+</div>

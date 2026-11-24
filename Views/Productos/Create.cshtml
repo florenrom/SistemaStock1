@@ -1,83 +1,125 @@
 ﻿@using NuevoSistemaNat.Models.Enum
 @model NuevoSistemaNat.Models.ViewModels.ProductoViewModel
+
 @{
-    ViewData["Title"] = "Nuevo Producto";
+    ViewData["Title"] = "Nuevo producto";
 }
 
+<div class="sf-crud">
 
-<h1>Nuevo Producto</h1>
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Codigo" class="control-label"></label>
-                <input asp-for="Codigo" class="form-control" />
-                <span asp-validation-for="Codigo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Nombre" class="control-label"></label>
-                <input asp-for="Nombre" class="form-control" />
-                <span asp-validation-for="Nombre" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Descripcion" class="control-label"></label>
-                <input asp-for="Descripcion" class="form-control" />
-                <span asp-validation-for="Descripcion" class="textdanger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="idCategoria" class="control-label"></label>
-                <select asp-for="idCategoria" class="form-select" asp-items="Model.Categorias">
-                    <option value="">-- Seleccione --</option>
-                </select>
-                <span asp-validation-for="idCategoria" class="textdanger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CantidadStock" class="control-label"></label>
-                <input asp-for="CantidadStock" class="form-control" />
-                <span asp-validation-for="CantidadStock" class="textdanger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="idDeposito" class="control-label">Depósito</label>
-                <select asp-for="idDeposito" class="form-select" asp-items="Model.Depositos">
-                    <option value="">-- Seleccione un depósito --</option>
-                </select>
-                <span asp-validation-for="idDeposito" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UnidadDeMedida" class="control-label"></label>
-                <select asp-for="UnidadDeMedida"
-                        class="form-select"
-                        asp-items="Html.GetEnumSelectList<UnidadMedida>()">
-                </select>
-                <span asp-validation-for="UnidadDeMedida" class="textdanger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PrecioCosto" class="control-label"></label>
-                <input asp-for="PrecioCosto" class="form-control" />
-                <span asp-validation-for="PrecioCosto" class="textdanger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PrecioVenta" class="control-label"></label>
-                <input asp-for="PrecioVenta" class="form-control" />
-                <span asp-validation-for="PrecioVenta" class="textdanger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="StockMinimo" class="control-label"></label>
-                <input asp-for="StockMinimo" class="form-control" />
-                <span asp-validation-for="StockMinimo" class="textdanger"></span>
+    <h1>Nuevo producto</h1>
+
+    <p class="sf-crud-description">
+        Completá los datos para registrar un nuevo producto en el inventario.
+    </p>
+
+    <div class="sf-crud-card">
+
+        <h5 class="sf-crud-card-title">
+            <i class="bi bi-box-seam me-2"></i>
+            Información del producto
+        </h5>
+
+        <form asp-action="Create" method="post">
+
+            <div asp-validation-summary="ModelOnly"
+                 class="text-danger mb-3"></div>
+
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Codigo" class="form-label"></label>
+                    <input asp-for="Codigo" class="form-control" />
+                    <span asp-validation-for="Codigo" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Nombre" class="form-label"></label>
+                    <input asp-for="Nombre" class="form-control" />
+                    <span asp-validation-for="Nombre" class="text-danger"></span>
+                </div>
+
+                <div class="col-12 mb-3">
+                    <label asp-for="Descripcion" class="form-label"></label>
+                    <input asp-for="Descripcion" class="form-control" />
+                    <span asp-validation-for="Descripcion" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="idCategoria" class="form-label"></label>
+                    <select asp-for="idCategoria"
+                            class="form-select"
+                            asp-items="Model.Categorias">
+                        <option value="">-- Seleccione --</option>
+                    </select>
+                    <span asp-validation-for="idCategoria" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="idDeposito" class="form-label">Depósito</label>
+                    <select asp-for="idDeposito"
+                            class="form-select"
+                            asp-items="Model.Depositos">
+                        <option value="">-- Seleccione un depósito --</option>
+                    </select>
+                    <span asp-validation-for="idDeposito" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="CantidadStock" class="form-label"></label>
+                    <input asp-for="CantidadStock" class="form-control" />
+                    <span asp-validation-for="CantidadStock" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="UnidadDeMedida" class="form-label"></label>
+                    <select asp-for="UnidadDeMedida"
+                            class="form-select"
+                            asp-items="Html.GetEnumSelectList<UnidadMedida>()">
+                    </select>
+                    <span asp-validation-for="UnidadDeMedida" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="PrecioCosto" class="form-label"></label>
+                    <input asp-for="PrecioCosto" class="form-control" />
+                    <span asp-validation-for="PrecioCosto" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="PrecioVenta" class="form-label"></label>
+                    <input asp-for="PrecioVenta" class="form-control" />
+                    <span asp-validation-for="PrecioVenta" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="StockMinimo" class="form-label"></label>
+                    <input asp-for="StockMinimo" class="form-control" />
+                    <span asp-validation-for="StockMinimo" class="text-danger"></span>
+                </div>
+
             </div>
 
-            <div class="form-group">
+            <div class="sf-crud-actions mt-3">
+
                 <button type="submit" class="btn btn-primary">
-                    Guardar
-                    Cambios
+                    <i class="bi bi-check-lg me-1"></i>
+                    Guardar producto
                 </button>
-                <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+
+                <a asp-action="Index" class="btn btn-link text-decoration-none">
+                    Cancelar
+                </a>
+
             </div>
+
         </form>
+
     </div>
 </div>
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

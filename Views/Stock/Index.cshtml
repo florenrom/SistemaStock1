@@ -4,70 +4,120 @@
     ViewData["Title"] = "Consulta de stock";
 }
 
-<h1>Consulta de stock</h1>
-<p class="text-muted">Consulta las existencias de productos y su distribución por depósito.</p>
+<div class="sf-crud">
 
-<div class="table-responsive">
-    <table class="table table-striped table-hover table-bordered align-middle sf-table">
-        <thead>
-            <tr>
-                <th>Código</th>
-                <th>Producto</th>
-                <th>Categoría</th>
-                <th>Stock total</th>
-                <th>Stock mínimo</th>
-                <th>Depósitos</th>
-                <th>Estado</th>
-            </tr>
-        </thead>
-        <tbody>
-            @if (Model != null && Model.Any())
-            {
-                @foreach (var producto in Model)
-                {
+    <h1>Consulta de stock</h1>
+
+    <p class="sf-crud-description">
+        Consultá las existencias de productos, su distribución por depósito y detectá aquellos que necesitan reposición.
+    </p>
+
+    <div class="sf-crud-card">
+
+        <h5 class="sf-crud-card-title">
+            <i class="bi bi-boxes me-2"></i>
+            Existencias de productos
+        </h5>
+
+        <div class="table-responsive">
+
+            <table class="table table-striped table-hover table-bordered align-middle sf-table">
+
+                <thead>
                     <tr>
-                        <td>@(producto.Codigo ?? "-")</td>
-                        <td>@producto.Producto</td>
-                        <td>@producto.Categoria</td>
-                        <td>@producto.StockTotal</td>
-                        <td>@producto.StockMinimo</td>
-                        <td>
-                            @if (producto.Depositos.Any())
-                            {
-                                @foreach (var deposito in producto.Depositos)
-                                {
-                                    <div>
-                                        <strong>@deposito.Deposito:</strong>
-                                        @deposito.Cantidad
-                                    </div>
-                                }
-                            }
-                            else
-                            {
-                                <span class="text-muted">Sin existencias</span>
-                            }
-                        </td>
-                        <td>
-                            @if (producto.StockTotal <= producto.StockMinimo)
-                            {
-                                <span class="badge bg-danger">Stock bajo</span>
-                            }
-                            else
-                            {
-                                <span class="badge bg-success">Disponible</span>
-                            }
-                        </td>
+                        <th>Código</th>
+                        <th>Producto</th>
+                        <th>Categoría</th>
+                        <th>Stock total</th>
+                        <th>Stock mínimo</th>
+                        <th>Depósitos</th>
+                        <th>Estado</th>
                     </tr>
-                }
-            }
-            else
-            {
-                <tr>
-                    <td colspan="7" class="text-center">
-                        No hay productos registrados.
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+                </thead>
+
+                <tbody>
+
+                    @if (Model != null && Model.Any())
+                    {
+                        @foreach (var producto in Model)
+                        {
+                            <tr>
+
+                                <td>
+                                    @(producto.Codigo ?? "-")
+                                </td>
+
+                                <td>
+                                    <strong>@producto.Producto</strong>
+                                </td>
+
+                                <td>
+                                    @producto.Categoria
+                                </td>
+
+                                <td>
+                                    @producto.StockTotal
+                                </td>
+
+                                <td>
+                                    @producto.StockMinimo
+                                </td>
+
+                                <td>
+                                    @if (producto.Depositos.Any())
+                                    {
+                                        @foreach (var deposito in producto.Depositos)
+                                        {
+                                            <div class="mb-1">
+                                                <strong>@deposito.Deposito:</strong>
+                                                @deposito.Cantidad
+                                            </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">
+                                            Sin existencias
+                                        </span>
+                                    }
+                                </td>
+
+                                <td>
+                                    @if (producto.StockTotal <= producto.StockMinimo)
+                                    {
+                                        <span class="badge bg-danger">
+                                            <i class="bi bi-exclamation-triangle me-1"></i>
+                                            Stock bajo
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-success">
+                                            <i class="bi bi-check-circle me-1"></i>
+                                            Disponible
+                                        </span>
+                                    }
+                                </td>
+
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="7" class="text-center py-4">
+                                <i class="bi bi-inbox fs-2 text-muted d-block mb-2"></i>
+                                No hay productos registrados.
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
 </div>

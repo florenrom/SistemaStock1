@@ -4,53 +4,67 @@
     ViewData["Title"] = "Editar depósito";
 }
 
-<div class="container mt-4">
+<div class="sf-crud">
 
-    <h2>Editar depósito</h2>
-    <hr />
+    <h1>Editar depósito</h1>
 
-    <div class="row">
-        <div class="col-md-6">
+    <p class="sf-crud-description">
+        Modificá los datos del depósito y guardá los cambios realizados.
+    </p>
 
-            <form asp-action="Edit" method="post">
-                @Html.AntiForgeryToken()
+    <div class="sf-crud-card">
 
-                <input type="hidden" asp-for="id" />
+        <h5 class="sf-crud-card-title">Datos del depósito</h5>
 
-                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+        <form asp-action="Edit" method="post">
 
-                <div class="mb-3">
-                    <label asp-for="Nombre" class="form-label"></label>
-                    <input asp-for="Nombre" class="form-control" />
-                    <span asp-validation-for="Nombre" class="text-danger"></span>
-                </div>
+            @Html.AntiForgeryToken()
 
-                <div class="mb-3">
-                    <label asp-for="Ubicacion" class="form-label"></label>
-                    <input asp-for="Ubicacion" class="form-control" />
-                    <span asp-validation-for="Ubicacion" class="text-danger"></span>
-                </div>
+            <input type="hidden" asp-for="id" />
 
-                <div class="form-check mb-3">
-                    <input asp-for="Activo" class="form-check-input" />
-                    <label asp-for="Activo" class="form-check-label">
-                        Depósito activo
-                    </label>
-                    <span asp-validation-for="Activo" class="text-danger"></span>
-                </div>
+            <div asp-validation-summary="ModelOnly"
+                 class="text-danger mb-3"></div>
+
+            <div class="mb-3">
+                <label asp-for="Nombre" class="form-label"></label>
+                <input asp-for="Nombre" class="form-control" />
+                <span asp-validation-for="Nombre"
+                      class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Ubicacion" class="form-label"></label>
+                <input asp-for="Ubicacion" class="form-control" />
+                <span asp-validation-for="Ubicacion"
+                      class="text-danger"></span>
+            </div>
+
+            <div class="form-check mb-3">
+                <input asp-for="Activo" class="form-check-input" />
+                <label asp-for="Activo" class="form-check-label">
+                    Depósito activo
+                </label>
+                <span asp-validation-for="Activo"
+                      class="text-danger"></span>
+            </div>
+
+            <div class="sf-crud-actions">
 
                 <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-check-circle me-1"></i>
                     Guardar cambios
                 </button>
 
-                <a asp-action="Index" class="btn btn-secondary">
-                    Volver
+                <a asp-action="Index"
+                   class="btn btn-link text-decoration-none">
+                    Cancelar
                 </a>
-            </form>
 
-        </div>
+            </div>
+
+        </form>
+
     </div>
-
 </div>
 
 @section Scripts {

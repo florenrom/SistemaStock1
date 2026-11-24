@@ -4,46 +4,74 @@
     ViewData["Title"] = "Proveedores";
 }
 
-<div class="container-fluid">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h1>Proveedores</h1>
+<div class="sf-crud">
 
-        <a asp-action="Create" class="btn btn-primary">
-            <i class="bi bi-plus-circle"></i> Nuevo proveedor
-        </a>
-    </div>
+    <h1>Proveedores</h1>
+
+    <p class="sf-crud-description">
+        Consultá y administrá los proveedores registrados en el sistema.
+    </p>
 
     @if (TempData["Ok"] != null)
     {
         <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="bi bi-check-circle-fill me-2"></i>
             @TempData["Ok"]
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <button type="button" class="btn-close"
+                    data-bs-dismiss="alert" aria-label="Cerrar"></button>
         </div>
     }
 
-    <div class="card mb-3">
-        <div class="card-body">
-            <form asp-action="Index" method="get" class="row g-2">
-                <div class="col-md-10">
-                    <input type="text" name="buscar" class="form-control"
-                           placeholder="Buscar por nombre, documento, teléfono, email o dirección..." />
-                </div>
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
 
-                <div class="col-md-2 d-grid">
-                    <button type="submit" class="btn btn-secondary">
-                        <i class="bi bi-search"></i> Buscar
-                    </button>
-                </div>
-            </form>
+        <div>
+            <h5 class="mb-1">Listado de proveedores</h5>
+            <span class="text-muted">Administración de contactos comerciales</span>
         </div>
+
+        <a asp-action="Create" class="btn btn-primary">
+            <i class="bi bi-plus-circle me-1"></i>
+            Nuevo proveedor
+        </a>
+
     </div>
 
-    <div class="card">
-        <div class="card-body table-responsive">
+    <div class="sf-crud-card mb-4">
+
+        <h5 class="sf-crud-card-title">
+            <i class="bi bi-search me-2"></i>
+            Buscar proveedores
+        </h5>
+
+        <form asp-action="Index" method="get" class="row g-3">
+
+            <div class="col-md-10">
+                <input type="text"
+                       name="buscar"
+                       class="form-control"
+                       placeholder="Buscar por nombre, documento, teléfono, email o dirección..." />
+            </div>
+
+            <div class="col-md-2 d-grid">
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-search me-1"></i>
+                    Buscar
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+
+    <div class="sf-crud-card">
+
+        <div class="table-responsive">
+
             <table class="table table-striped table-hover table-bordered align-middle sf-table">
+
                 <thead>
                     <tr>
-                        <th>Nombre / Razón Social</th>
+                        <th>Nombre / Razón social</th>
                         <th>Documento</th>
                         <th>Dirección</th>
                         <th>Teléfono</th>
@@ -54,16 +82,19 @@
                 </thead>
 
                 <tbody>
+
                     @if (Model.Any())
                     {
                         @foreach (var item in Model)
                         {
                             <tr>
+
                                 <td>@item.Nombre</td>
                                 <td>@(item.Documento ?? "-")</td>
                                 <td>@(item.Direccion ?? "-")</td>
                                 <td>@(item.Telefono ?? "-")</td>
                                 <td>@(item.Email ?? "-")</td>
+
                                 <td>
                                     @if (item.Activo)
                                     {
@@ -74,38 +105,56 @@
                                         <span class="badge bg-secondary">Inactivo</span>
                                     }
                                 </td>
-                                <td class="text-center">
-                                    <a asp-action="Details" asp-route-id="@item.id"
-                                       class="btn btn-sm btn-info" title="Detalles">
-                                        <i class="bi bi-eye"></i>
-                                    </a>
 
-                                    <a asp-action="Edit" asp-route-id="@item.id"
-                                       class="btn btn-sm btn-warning" title="Editar">
-                                        <i class="bi bi-pencil"></i>
-                                    </a>
+                                <td>
+                                    <div class="d-flex justify-content-center gap-1 flex-wrap">
 
-                                    @if (item.Activo)
-                                    {
-                                        <a asp-action="Delete" asp-route-id="@item.id"
-                                           class="btn btn-sm btn-danger" title="Desactivar">
-                                            <i class="bi bi-trash"></i>
+                                        <a asp-action="Details"
+                                           asp-route-id="@item.id"
+                                           class="btn btn-sm btn-info"
+                                           title="Ver detalles">
+                                            <i class="bi bi-eye"></i>
                                         </a>
-                                    }
+
+                                        <a asp-action="Edit"
+                                           asp-route-id="@item.id"
+                                           class="btn btn-sm btn-warning"
+                                           title="Editar proveedor">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+
+                                        @if (item.Activo)
+                                        {
+                                            <a asp-action="Delete"
+                                               asp-route-id="@item.id"
+                                               class="btn btn-sm btn-danger"
+                                               title="Desactivar proveedor">
+                                                <i class="bi bi-person-x"></i>
+                                            </a>
+                                        }
+
+                                    </div>
                                 </td>
+
                             </tr>
                         }
                     }
                     else
                     {
                         <tr>
-                            <td colspan="7" class="text-center text-muted">
+                            <td colspan="7" class="text-center text-muted py-4">
+                                <i class="bi bi-inbox fs-4 d-block mb-2"></i>
                                 No se encontraron proveedores.
                             </td>
                         </tr>
                     }
+
                 </tbody>
+
             </table>
+
         </div>
+
     </div>
+
 </div>

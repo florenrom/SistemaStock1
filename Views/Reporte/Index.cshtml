@@ -4,76 +4,87 @@
 
 <div class="container-fluid">
 
-    <div class="mb-4">
+    <div class="sf-crud">
+
         <h1>Reportes</h1>
-        <p class="text-muted">
-            Generá reportes de movimientos de stock según los filtros seleccionados.
+
+        <p class="sf-crud-description">
+            Generá y descargá reportes de movimientos de stock según el período y el tipo de operación.
         </p>
-    </div>
 
-    <div class="sf-panel">
+        <div class="sf-crud-card">
 
-        <h3 class="sf-panel-title">
-            <i class="bi bi-file-earmark-bar-graph me-2"></i>
-            Reporte de movimientos
-        </h3>
+            <h5 class="sf-crud-card-title">
+                <i class="bi bi-file-earmark-bar-graph me-2"></i>
+                Reporte de movimientos
+            </h5>
 
-        <form method="get">
+            <form method="get">
 
-            <div class="row">
+                <div class="row">
 
-                <div class="col-md-4 mb-3">
-                    <label for="desde" class="form-label">Fecha desde</label>
-                    <input type="date"
-                           id="desde"
-                           name="desde"
-                           class="form-control" />
+                    <div class="col-md-4 mb-3">
+                        <label for="desde" class="form-label">
+                            Fecha desde
+                        </label>
+
+                        <input type="date"
+                               id="desde"
+                               name="desde"
+                               class="form-control" />
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label for="hasta" class="form-label">
+                            Fecha hasta
+                        </label>
+
+                        <input type="date"
+                               id="hasta"
+                               name="hasta"
+                               class="form-control" />
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label for="tipo" class="form-label">
+                            Tipo de movimiento
+                        </label>
+
+                        <select id="tipo"
+                                name="tipo"
+                                class="form-select">
+                            <option value="">Todos</option>
+                            <option value="Entrada">Entrada</option>
+                            <option value="Salida">Salida</option>
+                            <option value="Transferencia">Transferencia</option>
+                        </select>
+                    </div>
+
                 </div>
 
-                <div class="col-md-4 mb-3">
-                    <label for="hasta" class="form-label">Fecha hasta</label>
-                    <input type="date"
-                           id="hasta"
-                           name="hasta"
-                           class="form-control" />
+                <hr />
+
+                <div class="sf-crud-actions">
+
+                    <button type="submit"
+                            class="btn btn-success"
+                            formaction="@Url.Action("DescargarExcel", "Reporte")">
+                        <i class="bi bi-file-earmark-excel me-1"></i>
+                        Descargar Excel
+                    </button>
+
+                    <button type="submit"
+                            class="btn btn-danger"
+                            formaction="@Url.Action("DescargarPdf", "Reporte")">
+                        <i class="bi bi-file-earmark-pdf me-1"></i>
+                        Descargar PDF
+                    </button>
+
                 </div>
 
-                <div class="col-md-4 mb-3">
-                    <label for="tipo" class="form-label">Tipo de movimiento</label>
+            </form>
 
-                    <select id="tipo"
-                            name="tipo"
-                            class="form-select">
-                        <option value="">Todos</option>
-                        <option value="Entrada">Entrada</option>
-                        <option value="Salida">Salida</option>
-                        <option value="Transferencia">Transferencia</option>
-                    </select>
-                </div>
-
-            </div>
-
-            <hr />
-
-            <div class="d-flex flex-wrap gap-2">
-
-                <button type="submit"
-                        class="btn btn-success"
-                        formaction="@Url.Action("DescargarExcel", "Reporte")">
-                    <i class="bi bi-file-earmark-excel me-1"></i>
-                    Descargar Excel
-                </button>
-
-                <button type="submit"
-                        class="btn btn-danger"
-                        formaction="@Url.Action("DescargarPdf", "Reporte")">
-                    <i class="bi bi-file-earmark-pdf me-1"></i>
-                    Descargar PDF
-                </button>
-
-            </div>
-
-        </form>
+        </div>
 
     </div>
 

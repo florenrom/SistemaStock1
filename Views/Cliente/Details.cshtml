@@ -4,51 +4,64 @@
     ViewData["Title"] = "Detalle del cliente";
 }
 
-<div class="container mt-4">
-    <h2>Detalle del cliente</h2>
+<div class="sf-crud">
 
-    <div class="card shadow-sm mt-3">
-        <div class="card-header">
-            <h5 class="mb-0">Información del cliente</h5>
-        </div>
+    <h1>Detalle del cliente</h1>
 
-        <div class="card-body">
-            <dl class="row">
-                <dt class="col-sm-3">Nombre / Razón Social</dt>
-                <dd class="col-sm-9">@Model.Nombre</dd>
+    <p class="sf-crud-description">
+        Consultá la información registrada del cliente.
+    </p>
 
-                <dt class="col-sm-3">Documento</dt>
-                <dd class="col-sm-9">@(Model.Documento ?? "Sin documento")</dd>
+    <div class="sf-crud-card">
 
-                <dt class="col-sm-3">Dirección</dt>
-                <dd class="col-sm-9">@(Model.Direccion ?? "Sin dirección")</dd>
+        <h5 class="sf-crud-card-title">Información del cliente</h5>
 
-                <dt class="col-sm-3">Teléfono</dt>
-                <dd class="col-sm-9">@(Model.Telefono ?? "Sin teléfono")</dd>
+        <dl class="row sf-crud-details">
 
-                <dt class="col-sm-3">Email</dt>
-                <dd class="col-sm-9">@(Model.Email ?? "Sin email")</dd>
+            <dt class="col-sm-4">Nombre</dt>
+            <dd class="col-sm-8">@Model.Nombre</dd>
 
-                <dt class="col-sm-3">Estado</dt>
-                <dd class="col-sm-9">
-                    @if (Model.Activo)
-                    {
-                        <span class="badge bg-success">Activo</span>
-                    }
-                    else
-                    {
-                        <span class="badge bg-secondary">Inactivo</span>
-                    }
-                </dd>
-            </dl>
+            <dt class="col-sm-4">Documento</dt>
+            <dd class="col-sm-8">@Model.Documento</dd>
 
-            <a asp-action="Edit" asp-route-id="@Model.id" class="btn btn-warning">
+            <dt class="col-sm-4">Dirección</dt>
+            <dd class="col-sm-8">@Model.Direccion</dd>
+
+            <dt class="col-sm-4">Teléfono</dt>
+            <dd class="col-sm-8">@Model.Telefono</dd>
+
+            <dt class="col-sm-4">Email</dt>
+            <dd class="col-sm-8">@Model.Email</dd>
+
+            <dt class="col-sm-4">Estado</dt>
+            <dd class="col-sm-8">
+                @if (Model.Activo)
+                {
+                    <span class="badge bg-success">Activo</span>
+                }
+                else
+                {
+                    <span class="badge bg-secondary">Inactivo</span>
+                }
+            </dd>
+
+        </dl>
+
+        <div class="sf-crud-actions">
+
+            <a asp-action="Edit"
+               asp-route-id="@Model.id"
+               class="btn btn-primary">
+                <i class="bi bi-pencil-square me-1"></i>
                 Editar
             </a>
 
-            <a asp-action="Index" class="btn btn-secondary">
+            <a asp-action="Index"
+               class="btn btn-link text-decoration-none">
                 Volver
             </a>
+
         </div>
+
     </div>
 </div>
