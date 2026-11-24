@@ -378,3 +378,111 @@ body {
         margin-right: 7px;
     }
 }
+/* ========================================
+   STOCKFLOW - BARRA SUPERIOR
+   ======================================== */
+
+.sf-user-info {
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    color: var(--sf-green-dark) !important;
+}
+
+    .sf-user-info i {
+        font-size: 1.2rem;
+        color: var(--sf-green);
+    }
+
+.sf-topbar .nav-link {
+    display: flex;
+    align-items: center;
+    transition: color 0.2s ease;
+}
+
+.sf-topbar form {
+    margin: 0;
+}
+
+.sf-topbar button.nav-link {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font: inherit;
+}
+/* ========================================
+   STOCKFLOW - CONTENIDO PRINCIPAL
+   ======================================== */
+
+.app-content {
+    min-height: calc(100vh - 120px);
+}
+
+    .app-content .container-fluid {
+        padding-left: 22px;
+        padding-right: 22px;
+    }
+
+.app-main h1 {
+    color: var(--sf-green-dark);
+    font-weight: 700;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+}
+
+.app-main h2,
+.app-main h3 {
+    color: var(--sf-green-dark);
+    font-weight: 600;
+}
+
+.app-main .card {
+    border: 1px solid var(--sf-border);
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.035);
+}
+
+@media (max-width: 768px) {
+    .app-content .container-fluid {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .app-main h1 {
+        font-size: 1.5rem;
+    }
+}
+/* Mantener el texto blanco del encabezado de bienvenida */
+.app-main .sf-welcome h1,
+.app-main .sf-welcome h2,
+.app-main .sf-welcome h3 {
+    color: #FFFFFF;
+}
+/* ========================================
+   STOCKFLOW - MEJORA DE TABLAS
+   ======================================== */
+
+.table {
+    vertical-align: middle;
+}
+
+    .table thead th {
+        background-color: #F6F4EF;
+        color: var(--sf-green-dark);
+        font-weight: 600;
+        border-bottom: 2px solid var(--sf-border);
+        white-space: nowrap;
+    }
+
+    .table tbody tr:hover {
+        background-color: #F0F6F2;
+    }
+
+    .table td,
+    .table th {
+        padding: 12px 14px;
+    }
+
+    .table .btn {
+        border-radius: 7px;
+    }
