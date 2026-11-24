@@ -26,7 +26,7 @@
     <a asp-action="Create" class="btn btn-primary">+ Nueva Categoría</a>
 </p>
 
-<table id="tablaCategorias" class="table table-striped mt-3">
+<table id="tablaCategorias" class="table table-striped table-bordered align-middle sf-table mt-3">
     <thead>
         <tr>
             <th>
@@ -41,7 +41,7 @@
             <th>Acciones</th>
         </tr>
     </thead>
-
+    
     <tbody>
         @foreach (var item in Model)
         {

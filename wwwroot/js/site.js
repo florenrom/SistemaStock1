@@ -1,25 +1,32 @@
 ﻿$(document).ready(function () {
 
-    // Tabla de Categorías
-    $('#tablaCategorias').DataTable({
+    // Inicializar todas las tablas del sistema
+    $('.sf-table').DataTable({
         language: {
             url: 'https://cdn.datatables.net/plug-ins/2.3.2/i18n/es-ES.json'
         }
     });
 
-    // Tabla de Productos
-    $('#tablaProductos').DataTable({
-        language: {
-            url: 'https://cdn.datatables.net/plug-ins/2.3.2/i18n/es-ES.json'
-        }
-    });
+    //// Tabla de Categorías
+    //$('#tablaCategorias').DataTable({
+    //    language: {
+    //        url: 'https://cdn.datatables.net/plug-ins/2.3.2/i18n/es-ES.json'
+    //    }
+    //});
 
-    // Tabla de Movimientos
-    $('#tablaMovimientos').DataTable({
-        language: {
-            url: 'https://cdn.datatables.net/plug-ins/2.3.2/i18n/es-ES.json'
-        }
-    });
+    //// Tabla de Productos
+    //$('#tablaProductos').DataTable({
+    //    language: {
+    //        url: 'https://cdn.datatables.net/plug-ins/2.3.2/i18n/es-ES.json'
+    //    }
+    //});
+
+    //// Tabla de Movimientos
+    //$('#tablaMovimientos').DataTable({
+    //    language: {
+    //        url: 'https://cdn.datatables.net/plug-ins/2.3.2/i18n/es-ES.json'
+    //    }
+    //});
 
 });
 // Confirmación de eliminación con SweetAlert2
