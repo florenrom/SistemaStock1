@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NuevoSistemaNat.Models.Entities;
-
 
 namespace NuevoSistemaNat.Data
 {
@@ -11,6 +11,7 @@ namespace NuevoSistemaNat.Data
         {
             var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
             var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
+            var configuration = services.GetRequiredService<IConfiguration>();
 
             // Crear roles si no existen
             string[] roles = { "Administrador", "Encargado", "Operador", "Consulta" };
@@ -23,9 +24,19 @@ namespace NuevoSistemaNat.Data
                 }
             }
 
-            // Crear usuario administrador por defecto
-            const string adminEmail = "admin@sistemastock.com";
+            // Obtener credenciales desde una configuración segura
+            string? adminEmail = configuration["AdminUser:Email"];
+            string? adminPassword = configuration["AdminUser:Password"];
 
+            if (string.IsNullOrWhiteSpace(adminEmail) ||
+                string.IsNullOrWhiteSpace(adminPassword))
+            {
+                throw new InvalidOperationException(
+                    "Faltan las credenciales iniciales del administrador en la configuración segura."
+                );
+            }
+
+            // Crear administrador si no existe
             if (await userManager.FindByEmailAsync(adminEmail) == null)
             {
                 var admin = new ApplicationUser
@@ -38,7 +49,7 @@ namespace NuevoSistemaNat.Data
                     Activo = true
                 };
 
-                var result = await userManager.CreateAsync(admin, "Admin@12345");
+                var result = await userManager.CreateAsync(admin, adminPassword);
 
                 if (result.Succeeded)
                 {
@@ -51,8 +62,6 @@ namespace NuevoSistemaNat.Data
                     );
                 }
             }
-
-
         }
     }
-}   
+}
